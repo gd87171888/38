@@ -1,0 +1,236 @@
+/* 祝福语收集器样式 */
+
+/* 祝福语收集面板 - 改为右下角悬浮图标 */
+#blessingPanel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 30, 60, 0.8);
+    border: 2px solid rgba(0, 191, 255, 0.7);
+    border-radius: 50%;
+    padding: 0;
+    z-index: 100;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 展开后的祝福面板 */
+#blessingPanel.expanded {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    padding: 10px;
+    right: 20px;
+    bottom: 80px;
+}
+
+/* 祝福图标 */
+#blessingIcon {
+    font-size: 24px;
+    color: rgba(0, 191, 255, 0.9);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 祝福内容容器 */
+#blessingContent {
+    display: none;
+}
+
+#blessingPanel.expanded #blessingIcon {
+    display: none;
+}
+
+#blessingPanel.expanded #blessingContent {
+    display: block;
+}
+
+/* 触发区域和连接线已移除 */
+
+/* 祝福语标题 */
+.blessing-header {
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.5);
+    padding-bottom: 5px;
+}
+
+.blessing-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+}
+
+/* 进度条容器 */
+.blessing-progress-container {
+    position: relative;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* 进度条 */
+.blessing-progress {
+    height: 100%;
+    width: 0%;
+    background-color: rgba(0, 191, 255, 0.7);
+    border-radius: 10px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+/* 进度条完成动画 */
+.blessing-progress-complete {
+    animation: progressPulse 1.5s infinite;
+}
+
+@keyframes progressPulse {
+    0% { background-color: rgba(255, 215, 0, 0.7); }
+    50% { background-color: rgba(255, 255, 0, 0.9); }
+    100% { background-color: rgba(255, 215, 0, 0.7); }
+}
+
+/* 进度计数 */
+.blessing-count {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+/* 祝福语列表 */
+.blessing-list {
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-right: 5px;
+}
+
+/* 自定义滚动条 */
+.blessing-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.blessing-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.blessing-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 191, 255, 0.5);
+    border-radius: 5px;
+}
+
+/* 祝福语项目 */
+.blessing-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* 收集动画 */
+.collect-animation {
+    position: fixed;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    pointer-events: none;
+    animation: collectFloat 1s forwards;
+}
+
+@keyframes collectFloat {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -100px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* 完成动画 */
+.completion-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.completion-content {
+    background-color: rgba(0, 30, 60, 0.9);
+    border: 3px solid rgba(255, 215, 0, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    max-width: 80%;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.completion-content h2 {
+    color: rgba(255, 215, 0, 0.9);
+    margin-top: 0;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.collected-blessings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.collected-blessings span {
+    padding: 5px 10px;
+    background-color: rgba(0, 191, 255, 0.3);
+    border: 1px solid rgba(0, 191, 255, 0.7);
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
