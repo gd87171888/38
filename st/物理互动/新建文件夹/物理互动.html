@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理学可视化互动项目</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', Tahoma, Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3 {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode .card {
+            background-color: #2d3748;
+        }
+        .dark-mode .hero {
+            background-color: #2d3748;
+        }
+        .mermaid {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <!-- 深色/浅色模式切换按钮 -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="btn bg-yellow-500 text-white p-2 rounded-full">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Hero 模块 -->
+    <section class="hero relative bg-blue-900 text-white py-20 text-center" style="background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa'); background-size: cover;">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative z-10">
+            <h1 class="text-5xl font-bold mb-4">物理学可视化互动项目</h1>
+            <h2 class="text-2xl mb-6">探索物理世界的奥秘</h2>
+            <p class="text-lg max-w-2xl mx-auto">从微观的量子世界到宏观的宇宙，物理学揭示了自然界最深层的规律。让我们一起通过互动可视化，探索这些奇妙的现象。</p>
+        </div>
+    </section>
+
+    <!-- 内容模块 -->
+    <section class="container mx-auto py-12 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 经典力学 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-cogs text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">经典力学</h3>
+            <p>研究物体运动的基本规律，包括牛顿三大定律、运动学和动力学，是物理学的基石。</p>
+        </div>
+        <!-- 电磁学 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-magnet text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">电磁学</h3>
+            <p>探索电场、磁场及电磁波的性质，奠定了现代技术的基础。</p>
+        </div>
+        <!-- 热力学 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-thermometer-half text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">热力学</h3>
+            <p>研究能量转换与热现象，揭示热力学定律的普适性。</p>
+        </div>
+        <!-- 量子力学 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-atom text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">量子力学</h3>
+            <p>揭示微观世界的奇异规律，如波粒二象性和量子纠缠。</p>
+        </div>
+        <!-- 相对论 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-space-shuttle text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">相对论</h3>
+            <p>爱因斯坦的杰作，重新定义时间与空间的本质。</p>
+        </div>
+        <!-- 流体动力学 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-water text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">流体动力学</h3>
+            <p>研究液体和气体的流动特性，广泛应用于工程与自然界。</p>
+        </div>
+        <!-- 波动物理 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-wave-square text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">波动物理</h3>
+            <p>探讨波的传播、干涉与衍射现象，连接声、光与电磁波。</p>
+        </div>
+        <!-- 核物理 -->
+        <div class="card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-radiation text-3xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">核物理</h3>
+            <p>研究原子核的结构与核反应，揭开能量与物质的奥秘。</p>
+        </div>
+    </section>
+
+    <!-- 数据可视化 -->
+    <section class="container mx-auto py-12 px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">物理学领域关系图</h2>
+        <div class="mermaid">
+            graph TD
+                A[物理学] --> B(经典力学)
+                A --> C(电磁学)
+                A --> D(热力学)
+                A --> E(量子力学)
+                A --> F(相对论)
+                A --> G(流体动力学)
+                A --> H(波动物理)
+                A --> I(核物理)
+                B --> G
+                C --> H
+                E --> I
+                F --> H
+        </div>
+    </section>
+
+    <!-- 延伸阅读 -->
+    <section class="container mx-auto py-12 px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">进一步阅读</h2>
+        <ul class="list-disc pl-6 max-w-2xl mx-auto">
+            <li><strong>《费曼物理学讲义》</strong> - 深入浅出讲解物理学基础。</li>
+            <li><strong>《时间简史》</strong> - 霍金对宇宙和相对论的经典解读。</li>
+            <li><strong>《量子力学导论》</strong> - Griffiths 的入门级量子力学教材。</li>
+            <li><strong>《流体力学基础》</strong> - 经典流体力学入门书籍。</li>
+            <li><strong>《原子核物理学》</strong> - 探索核物理的核心概念。</li>
+        </ul>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // 初始化 Mermaid
+        mermaid.initialize({ startOnLoad: true });
+
+        // 深色/浅色模式切换
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+            toggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                toggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

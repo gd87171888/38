@@ -1,0 +1,177 @@
+/* 艺术字输入区域样式 */
+.art-text-input-container {
+    position: fixed;
+    bottom: 80px; /* 将输入框向上移动，从20px改为80px */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 30px;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #00ffff, #ff00ff) 1;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 15px rgba(255, 0, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.art-text-input-container:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7), 0 0 25px rgba(255, 0, 255, 0.7);
+}
+
+.art-text-input {
+    width: 150px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 18px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.art-text-input:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    width: 180px;
+}
+
+.art-text-send-btn {
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ffff;
+    border-radius: 20px;
+    color: #00ffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.art-text-send-btn:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    transform: scale(1.05);
+}
+
+.art-text-send-btn:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+    opacity: 0.3;
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
+    /* animation: glowRotate 6s infinite linear; */ /* 移除旋转动画 */
+}
+
+/* 艺术字展示区域样式 */
+.art-text-display {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 1000;
+    text-align: center;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    perspective: 1000px;
+}
+
+.art-text-display.show {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.art-text-content {
+    font-size: 60px;
+    font-weight: bold;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    position: relative;
+    font-family: 'Indie Flower', 'Caveat', 'Shadows Into Light', cursive;
+    letter-spacing: 2px;
+    transform-origin: center;
+}
+
+/* 艺术字动画效果 */
+@keyframes textGlow {
+    0% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 255, 0, 0.5); }
+    100% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.5); }
+}
+
+/* 手绘效果动画 */
+@keyframes handwriting {
+    0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+
+/* 笔触效果动画 */
+@keyframes inkSpread {
+    0% { filter: blur(0px); letter-spacing: 2px; }
+    30% { filter: blur(1px); letter-spacing: 2.5px; }
+    70% { filter: blur(0.5px); letter-spacing: 2.2px; }
+    100% { filter: blur(0px); letter-spacing: 2px; }
+}
+
+/* 手绘抖动效果 */
+@keyframes handDrawnShake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(1px, 1px) rotate(0.5deg); }
+    50% { transform: translate(-1px, -0.5px) rotate(-0.5deg); }
+    75% { transform: translate(0.5px, -1px) rotate(0.3deg); }
+}
+
+@keyframes textColorShift {
+    0% { background-image: linear-gradient(45deg, #00ffff, #ff00ff); }
+    25% { background-image: linear-gradient(45deg, #ff00ff, #ffff00); }
+    50% { background-image: linear-gradient(45deg, #ffff00, #00ffff); }
+    75% { background-image: linear-gradient(45deg, #00ffff, #ff00ff); }
+    100% { background-image: linear-gradient(45deg, #ff00ff, #ffff00); }
+}
+
+@keyframes textFloat {
+    0% { transform: translateY(0) rotateX(0deg); }
+    25% { transform: translateY(-10px) rotateX(5deg); }
+    50% { transform: translateY(0) rotateX(0deg); }
+    75% { transform: translateY(10px) rotateX(-5deg); }
+    100% { transform: translateY(0) rotateX(0deg); }
+}
+
+@keyframes particleBurst {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+/* 粒子效果 */
+.art-text-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #00ffff;
+    box-shadow: 0 0 10px #00ffff;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 艺术字消失动画 */
+@keyframes textFadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* 发送按钮光晕旋转动画 */
+@keyframes glowRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

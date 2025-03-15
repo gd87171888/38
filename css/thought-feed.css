@@ -1,0 +1,83 @@
+.thought-feed-container {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    z-index: 1000;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 0, 0.5) rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(350px);
+}
+
+.thought-feed-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.thought-feed-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.thought-feed-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 0, 0.5);
+    border-radius: 3px;
+}
+
+.tweet {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 0.9em;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: tweetFadeIn 0.5s forwards;
+}
+
+.tweet:hover {
+    border-color: rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+.tweet-timestamp {
+    color: rgba(0, 255, 0, 0.7);
+    font-size: 0.8em;
+    margin-top: 8px;
+}
+
+@keyframes tweetFadeIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes tweetFadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}

@@ -1,0 +1,468 @@
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff, 0 0 15px #00ffff;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
+}
+
+/* 添加Logo点击效果 */
+.logo:active {
+    transform: scale(0.95) rotate(5deg);
+}
+
+/* 添加Logo图标点击旋转效果 */
+.logo-icon:active {
+    animation: logoClickRotate 0.5s ease;
+    transform: rotate(180deg);
+}
+
+/* 重新设计的牛头logo图标 - 增强3D效果 */
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #333333, #000000);
+    border-radius: 50%;
+    position: relative;
+    margin-right: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(255, 0, 255, 0.5), inset 0 5px 10px rgba(255,255,255,0.2), inset 0 -5px 10px rgba(0,0,0,0.8);
+    animation: logoGlow 2s infinite alternate;
+    transform-style: preserve-3d;
+    overflow: visible;
+    transition: transform 0.3s ease;
+    /* 添加更强的3D效果 */
+    transform: perspective(100px) rotateX(10deg);
+}
+
+/* 添加悬停3D效果 - 增强动态感 */
+.logo-icon:hover {
+    transform: perspective(100px) rotateX(15deg) rotateY(15deg) scale(1.15);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 35px rgba(255, 0, 255, 0.8), 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* 添加电路板纹理 */
+.logo-icon:before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    clip-path: polygon(50% 10%, 90% 40%, 75% 90%, 25% 90%, 10% 40%);
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    background-image: 
+        radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.3) 2px, transparent 2px),
+        linear-gradient(to right, transparent 40%, rgba(255, 0, 255, 0.2) 40%, rgba(255, 0, 255, 0.2) 42%, transparent 42%),
+        linear-gradient(to bottom, transparent 70%, rgba(0, 255, 255, 0.2) 70%, rgba(0, 255, 255, 0.2) 72%, transparent 72%);
+}
+
+/* 全息牛头图案效果 */
+.logo-icon:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    clip-path: polygon(
+        -10% 0%, /* 左角尖端 - 更长更尖的角 */
+        -5% -25%, /* 左角上部 - 更延伸的角 */
+        5% -10%, /* 左角内侧 - 更明显 */
+        15% 0%, /* 左耳上部 */
+        25% 10%, /* 左耳内侧 */
+        40% 5%, /* 左额头 */
+        60% 5%, /* 右额头 */
+        75% 10%, /* 右耳内侧 */
+        85% 0%, /* 右耳上部 */
+        95% -10%, /* 右角内侧 - 更明显 */
+        105% -25%, /* 右角上部 - 更延伸的角 */
+        110% 0%, /* 右角尖端 - 更长更尖的角 */
+        95% 40%, /* 右脸上部 */
+        90% 60%, /* 右脸 */
+        75% 80%, /* 右下颌 */
+        50% 100%, /* 下巴尖 */
+        25% 80%, /* 左下颌 */
+        10% 60%, /* 左脸 */
+        5% 40% /* 左脸上部 */
+    );
+    z-index: 2;
+    background: linear-gradient(135deg, #ff00ff, #00ffff, #ffff00);
+    box-shadow: 
+        0 0 8px #00ffff,
+        0 0 15px #ff00ff,
+        0 0 20px rgba(255, 255, 255, 0.8);
+    animation: textFlicker 3s infinite alternate, bullHeadRotate 8s infinite linear;
+    transform-style: preserve-3d;
+}
+
+/* 添加牛眼睛和面部细节 - 优化眼睛和添加笑脸 */
+.logo-icon:before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    background-image: 
+        /* 更立体的眼睛 - 使用椭圆形并添加动画效果 */
+        radial-gradient(ellipse at 35% 45%, rgba(0, 255, 255, 1) 4px, rgba(0, 0, 255, 0.8) 5px, transparent 7px), /* 左眼 - 青色到蓝色渐变 */
+        radial-gradient(ellipse at 65% 45%, rgba(0, 255, 255, 1) 4px, rgba(0, 0, 255, 0.8) 5px, transparent 7px), /* 右眼 - 青色到蓝色渐变 */
+        /* 眼睛高光 - 更大更明显 */
+        radial-gradient(circle at 34% 43%, rgba(255, 255, 255, 1) 2.5px, transparent 3px), /* 左眼高光 */
+        radial-gradient(circle at 64% 43%, rgba(255, 255, 255, 1) 2.5px, transparent 3px), /* 右眼高光 */
+        /* 眼睛下方弧线 - 增加立体感 */
+        radial-gradient(ellipse at 35% 48%, rgba(0, 0, 0, 0.6) 3px, transparent 4px), /* 左眼下阴影 */
+        radial-gradient(ellipse at 65% 48%, rgba(0, 0, 0, 0.6) 3px, transparent 4px), /* 右眼下阴影 */
+        /* 鼻子 - 更立体 */
+        radial-gradient(ellipse at 50% 60%, rgba(255, 0, 255, 0.8) 5px, rgba(128, 0, 128, 0.6) 7px, transparent 8px),
+        /* 笑脸嘴巴 - 使用弧形渐变 */
+        radial-gradient(ellipse at 50% 75%, transparent 5px, rgba(255, 255, 255, 0.9) 6px, transparent 12px);
+    box-shadow: inset 0 0 15px rgba(255, 0, 255, 0.5), inset 0 5px 10px rgba(0,0,0,0.5);
+    animation: eyesBlink 4s infinite;
+}
+
+/* 添加边缘光效 */
+.logo-edge {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    background: transparent;
+    z-index: 0;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px rgba(0, 255, 255, 0.5);
+    opacity: 0.7;
+    animation: edgePulse 2s infinite alternate;
+}
+
+.logo-text {
+    position: relative;
+    background: linear-gradient(to right, #00ffff, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    animation: textColorShift 8s infinite linear;
+}
+
+/* 底部线条效果增强 */
+.logo-text:after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #00ffff, #ff00ff, #00ffff, transparent);
+    animation: lineGlow 2s infinite alternate, lineColorShift 8s infinite linear;
+}
+
+/* 添加顶部线条 */
+.logo-text:before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ff00ff, #00ffff, transparent);
+    animation: lineGlowTop 2s infinite alternate-reverse, lineColorShift 8s infinite linear;
+    opacity: 0.7;
+}
+
+/* 添加粒子效果 */
+.logo:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 10%, rgba(0, 255, 255, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 30% 70%, rgba(255, 0, 255, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 0, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 90% 90%, rgba(0, 255, 255, 0.5) 1px, transparent 1px);
+    background-size: 100% 100%;
+    filter: blur(1px);
+    opacity: 0;
+    animation: particlesFade 3s infinite alternate;
+}
+
+/* 动画定义 */
+@keyframes logoGlow {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 15px rgba(255, 0, 255, 0.5), inset 0 5px 10px rgba(255,255,255,0.1), inset 0 -5px 10px rgba(0,0,0,0.7); }
+    100% { box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 255, 0, 0.5), inset 0 8px 15px rgba(255,255,255,0.2), inset 0 -8px 15px rgba(0,0,0,0.8); }
+}
+
+@keyframes lineGlow {
+    0% { opacity: 0.5; width: 0; left: 50%; }
+    100% { opacity: 1; width: 100%; left: 0; }
+}
+
+@keyframes lineGlowTop {
+    0% { opacity: 0.3; width: 0; left: 50%; }
+    100% { opacity: 0.7; width: 80%; left: 10%; }
+}
+
+@keyframes logoRotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 1; }
+    5%, 10% { opacity: 0.8; }
+    15% { opacity: 1; }
+    20% { opacity: 0.9; }
+    25% { opacity: 1; }
+}
+
+@keyframes edgePulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes textColorShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes lineColorShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes particlesFade {
+    0% { opacity: 0; }
+    100% { opacity: 0.7; }
+}
+
+/* 添加眼睛闪烁动画 */
+@keyframes eyesBlink {
+    0%, 45%, 55%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* 添加笑脸动画 */
+@keyframes smileWiden {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(1.2); }
+}
+
+@keyframes logoClickRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+}
+
+/* 添加3D浮雕效果的牛角 - 增强立体感 */
+.logo-icon .bull-horn-left, 
+.logo-icon .bull-horn-right {
+    content: '';
+    position: absolute;
+    width: 18px; /* 稍微加大 */
+    height: 18px; /* 稍微加大 */
+    top: -8px; /* 调整位置 */
+    background: linear-gradient(135deg, #888, #444, #000);
+    border-radius: 50% 50% 0 50%;
+    transform-style: preserve-3d;
+    z-index: 3;
+    box-shadow: -3px 3px 8px rgba(0,0,0,0.7), inset 2px -2px 5px rgba(255,255,255,0.3);
+    /* 添加微弱发光效果 */
+    filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5));
+}
+
+.logo-icon .bull-horn-left {
+    left: 0;
+    transform: rotate(-45deg) skew(10deg, 10deg);
+}
+
+.logo-icon .bull-horn-right {
+    right: 0;
+    transform: rotate(45deg) skew(-10deg, -10deg);
+    border-radius: 50% 50% 50% 0;
+}
+
+/* 添加牛角高光 */
+.logo-icon .bull-horn-left:after,
+.logo-icon .bull-horn-right:after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    top: 3px;
+    left: 3px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.1));
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+/* 重新设计的牛头logo图标 - 科技感线条风格 */
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    position: relative;
+    margin-right: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(255, 0, 255, 0.5);
+    animation: logoGlow 2s infinite alternate;
+    transform-style: preserve-3d;
+    overflow: visible;
+    transition: transform 0.3s ease;
+    transform: perspective(100px) rotateX(10deg);
+}
+
+/* 添加悬停3D效果 - 增强动态感 */
+.logo-icon:hover {
+    transform: perspective(100px) rotateX(15deg) rotateY(15deg) scale(1.15);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 35px rgba(255, 0, 255, 0.8), 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* 科技感线条牛头 - 主要轮廓 */
+.logo-icon:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 1;
+    border: 1px solid rgba(0, 255, 255, 0.7);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5), inset 0 0 5px rgba(0, 255, 255, 0.3);
+}
+
+/* 科技感线条牛头 - 内部线条 */
+.logo-icon:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    z-index: 2;
+    background-image: 
+        /* 左侧线条 */
+        linear-gradient(45deg, transparent 45%, rgba(0, 255, 255, 0.8) 45%, rgba(0, 255, 255, 0.8) 55%, transparent 55%),
+        /* 右侧线条 */
+        linear-gradient(-45deg, transparent 45%, rgba(0, 255, 255, 0.8) 45%, rgba(0, 255, 255, 0.8) 55%, transparent 55%),
+        /* 中间连接线 */
+        linear-gradient(90deg, transparent 48%, rgba(255, 0, 255, 0.8) 48%, rgba(255, 0, 255, 0.8) 52%, transparent 52%),
+        /* 底部线条 */
+        linear-gradient(0deg, transparent 75%, rgba(0, 255, 255, 0.8) 75%, rgba(0, 255, 255, 0.8) 80%, transparent 80%);
+    animation: lineColorShift 8s infinite linear;
+}
+
+/* 添加电路节点效果 */
+.logo-icon .circuit-node-1,
+.logo-icon .circuit-node-2,
+.logo-icon .circuit-node-3,
+.logo-icon .circuit-node-4 {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0, 255, 255, 1);
+    border-radius: 50%;
+    z-index: 3;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+    animation: nodeGlow 2s infinite alternate;
+}
+
+.logo-icon .circuit-node-1 {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-icon .circuit-node-2 {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-icon .circuit-node-3 {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+.logo-icon .circuit-node-4 {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/* 添加节点闪烁动画 */
+@keyframes nodeGlow {
+    0% { opacity: 0.5; box-shadow: 0 0 3px rgba(0, 255, 255, 0.5); }
+    100% { opacity: 1; box-shadow: 0 0 8px rgba(0, 255, 255, 1), 0 0 12px rgba(255, 0, 255, 0.7); }
+}
+
+/* 移除旧的牛角样式 */
+.logo-icon .bull-horn-left, 
+.logo-icon .bull-horn-right {
+    display: none;
+}
+
+/* 添加科技感线条牛角 */
+.logo-icon .tech-horn-left,
+.logo-icon .tech-horn-right {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: -5px;
+    z-index: 3;
+    border-style: solid;
+    border-width: 0 0 2px 2px;
+    border-color: rgba(0, 255, 255, 0.8);
+    box-shadow: -2px 2px 5px rgba(0, 255, 255, 0.5);
+    animation: hornGlow 3s infinite alternate;
+}
+
+.logo-icon .tech-horn-left {
+    left: 5px;
+    transform: rotate(45deg);
+    border-bottom-left-radius: 8px;
+}
+
+.logo-icon .tech-horn-right {
+    right: 5px;
+    transform: rotate(-45deg);
+    border-width: 0 2px 2px 0;
+    border-bottom-right-radius: 8px;
+}
+
+/* 添加牛角发光动画 */
+@keyframes hornGlow {
+    0% { border-color: rgba(0, 255, 255, 0.5); box-shadow: -1px 1px 3px rgba(0, 255, 255, 0.3); }
+    100% { border-color: rgba(0, 255, 255, 1); box-shadow: -2px 2px 8px rgba(0, 255, 255, 0.8), -1px 1px 5px rgba(255, 0, 255, 0.5); }
+}

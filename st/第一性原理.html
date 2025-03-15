@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一性原理 - 李善友</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.7/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0f3460;
+            --secondary-color: #16213e;
+            --accent-color: #e94560;
+            --accent-light: #ff758f;
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --quote-bg: #f1f5f9;
+            --highlight: #fef3c7;
+            --gold: #d4af37;
+        }
+        
+        .dark {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #f43f5e;
+            --accent-light: #fb7185;
+            --text-color: #e2e8f0;
+            --text-light: #94a3b8;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --quote-bg: #1e293b;
+            --highlight: #374151;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', Tahoma, Arial, Roboto, "Droid Sans", "Helvetica Neue", "Droid Sans Fallback", "Heiti SC", "Hiragino Sans GB", Simsun, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjMGYzNDYwIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2MjEzZSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2MjEzZSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==');
+            opacity: 0.1;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .chapter-card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chapter-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 4rem;
+            font-weight: 900;
+            opacity: 0.1;
+            color: var(--primary-color);
+            font-family: 'Noto Serif SC', serif;
+            line-height: 1;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+            font-style: italic;
+            margin: 1.5rem 0;
+            background-color: var(--quote-bg);
+            padding: 1rem;
+            border-radius: 0.25rem;
+        }
+        
+        .toc {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            transition: color 0.3s, transform 0.3s;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+        
+        .toc-link:hover, .toc-link.active {
+            color: var(--accent-color);
+            border-left-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .first-letter {
+            position: relative;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5em;
+            font-weight: 700;
+            float: left;
+            line-height: 0.8;
+            margin-right: 0.1em;
+            color: var(--accent-color);
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .btn {
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .concept-card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .concept-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .book-cover {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .book-cover:hover {
+            transform: translateY(-10px) rotate(2deg);
+        }
+        
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
+        }
+        
+        .highlight {
+            background-color: var(--highlight);
+            padding: 0.2em 0.4em;
+            border-radius: 0.2em;
+        }
+        
+        .gold-text {
+            color: var(--gold);
+        }
+        
+        .quote-container {
+            position: relative;
+            padding: 2rem;
+            background-color: var(--quote-bg);
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote-container::before, .quote-container::after {
+            content: '"';
+            font-size: 4rem;
+            font-family: 'Noto Serif SC', serif;
+            position: absolute;
+            color: var(--accent-color);
+            opacity: 0.2;
+        }
+        
+        .quote-container::before {
+            top: -10px;
+            left: 10px;
+        }
+        
+        .quote-container::after {
+            bottom: -40px;
+            right: 10px;
+        }
+        
+        .author-card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .author-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem;
+            color: white;
+            position: relative;
+        }
+        
+        .author-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+        }
+        
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-top: -60px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            background-color: var(--accent-color);
+        }
+        
+        .related-book {
+            transition: transform 0.3s;
+        }
+        
+        .related-book:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-book img {
+            border-radius: 0.25rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .toc {
+                position: relative;
+                top: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .chapter-number {
+                font-size: 3rem;
+            }
+            
+            .first-letter::first-letter {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md" style="background-color: var(--card-bg);">
+        <div class="container px-4 py-3 mx-auto flex justify-between items-center">
+            <a href="#" class="text-xl font-bold flex items-center" style="color: var(--primary-color);">
+                <i class="fas fa-brain mr-2"></i>
+                <span>第一性原理</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="nav-link">概述</a>
+                <a href="#chapters" class="nav-link">章节</a>
+                <a href="#concepts" class="nav-link">核心概念</a>
+                <a href="#author" class="nav-link">作者</a>
+                <a href="#related" class="nav-link">延伸阅读</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <button class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 py-2 pb-4 bg-white dark:bg-gray-900 shadow-inner" style="background-color: var(--card-bg);">
+            <a href="#overview" class="block py-2 border-b border-gray-200 dark:border-gray-700">概述</a>
+            <a href="#chapters" class="block py-2 border-b border-gray-200 dark:border-gray-700">章节</a>
+            <a href="#concepts" class="block py-2 border-b border-gray-200 dark:border-gray-700">核心概念</a>
+            <a href="#author" class="block py-2 border-b border-gray-200 dark:border-gray-700">作者</a>
+            <a href="#related" class="block py-2">延伸阅读</a>
+        </div>
+    </nav>
+    
+    <!-- Hero区域 -->
+    <section class="hero py-20 md:py-32">
+        <div class="container px-4 mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gold-text">第一性原理</span><br>
+                        任何理性系统的根基性命题
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                        打破认知边界，实现第二曲线创新，你需要全新的思维模式——演绎法。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#chapters" class="btn px-6 py-3 bg-white text-blue-900 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                            开始阅读
+                        </a>
+                        <a href="#concepts" class="btn px-6 py-3 bg-transparent border-2 border-white rounded-md font-medium hover:bg-white hover:bg-opacity-10 transition-colors">
+                            核心概念
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="book-cover w-64 h-80 md:w-80 md:h-96 bg-blue-800 flex items-center justify-center text-center p-6 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700"></div>
+                        <div class="relative z-10">
+                            <h2 class="text-white text-3xl md:text-4xl font-bold mb-4">第一性原理</h2>
+                            <div class="w-16 h-1 bg-white mx-auto mb-4"></div>
+                            <p class="text-blue-200 mb-6">李善友 著</p>
+                            <div class="text-xs text-blue-300">人民邮电出版社</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 概述部分 -->
+    <section id="overview" class="py-16 md:py-24">
+        <div class="container px-4 mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: var(--primary-color);">关于本书</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400">
+                    《第一性原理》是李善友教授的一部关于思维方式和创新的著作，探讨了如何通过第一性原理思考方式打破认知边界，实现突破性创新。
+                </p>
+            </div>
+            
+            <div class="quote-container">
+                <p id="typingQuote" class="text-xl md:text-2xl text-center italic">
+                    "走入混沌，是为了走出混沌。真理，在洞穴之外，阳光之下。"
+                </p>
+                <p class="text-right mt-4 text-gray-600 dark:text-gray-400">— 李善友</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                <div class="concept-card fade-in">
+                    <div class="concept-icon mx-auto">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center" style="color: var(--primary-color);">思维模式</h3>
+                    <p class="text-center text-gray-600 dark:text-gray-400">
+                        探索归纳法与演绎法两种基本思维方式，以及它们如何影响我们的认知和创新能力。
+                    </p>
+                </div>
+                
+                <div class="concept-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="concept-icon mx-auto" style="background-color: var(--accent-color);">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center" style="color: var(--primary-color);">破界创新</h3>
+                    <p class="text-center text-gray-600 dark:text-gray-400">
+                        学习如何打破既有认知边界，从根本上重新思考问题，实现突破性创新。
+                    </p>
+                </div>
+                
+                <div class="concept-card fade-in" style="transition-delay: 0.4s;">
+                    <div class="concept-icon mx-auto" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center" style="color: var(--primary-color);">公理化思维</h3>
+                    <p class="text-center text-gray-600 dark:text-gray-400">
+                        理解公理化思维如何成为人类理性思维的顶级智慧，以及它在创新中的应用。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 章节内容 -->
+    <section id="chapters" class="py-16 bg-gray-50 dark:bg-gray-800" style="background-color: var(--bg-color);">
+        <div class="container px-4 mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center" style="color: var(--primary-color);">书籍章节</h2>
+            
+            <div class="flex flex-col md:flex-row">
+                <!-- 目录导航 -->
+                <div class="md:w-1/4 mb-8 md:mb-0">
+                    <div class="toc">
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">目录</h3>
+                        <a href="#chapter1" class="toc-link">第一章 第一性原理</a>
+                        <a href="#chapter2" class="toc-link">第二章 公理化思维</a>
+                        <a href="#chapter3" class="toc-link">第三章 破界创新</a>
+                        <a href="#chapter4" class="toc-link">第四章 组织刷新</a>
+                        <a href="#chapter5" class="toc-link">第五章 第一创新</a>
+                        <a href="#chapter6" class="toc-link">第六章 万物至理</a>
+                        <a href="#chapter7" class="toc-link">第七章 从众效应</a>
+                        <a href="#chapter8" class="toc-link">第八章 批判性思维</a>
+                    </div>
+                </div>
+                
+                <!-- 章节内容 -->
+                <div class="md:w-3/4 md:pl-8">
+                    <!-- 第一章 -->
+                    <div id="chapter1" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">01</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第一章 第一性原理：任何理性系统的根基性命题</h3>
+                            <div class="prose">
+                                <p class="first-letter">归纳法是通过实践推导结论，把连续性的经验推广到一切时空。然而，并非所有事物都有连续性，固有的思维会让你陷入"归纳法谬误"。打破认知边界，实现第二曲线创新，你需要全新的思维模式——演绎法。但是演绎法必须有一个基石，一个来自系统之外、能够逻辑自洽的元起点。这个元起点既可以称为第一前提、逻辑奇点，也可以称为第一性原理。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>空间性归纳与时间性归纳</li>
+                                        <li>归纳结果的可重复性</li>
+                                        <li>只能证伪，不能证明</li>
+                                        <li>连续性假设是归纳法的隐含假设</li>
+                                        <li>求存不求真的阿喀琉斯之踵</li>
+                                        <li>演绎法三段论</li>
+                                        <li>逻辑比事实更真实</li>
+                                        <li>前提的准确性是演绎法的隐含假设</li>
+                                        <li>任何系统都有自己的基石假设</li>
+                                        <li>不是系统之内，而是系统之外</li>
+                                        <li>第一性原理的层级之分</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "第一性原理是一种思考方式，它要求你追溯到事物的最基本真理，并从那里推理，而不是依赖于类比或现有经验。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第二章 -->
+                    <div id="chapter2" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">02</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第二章 公理化思维：人类理性思维的顶级智慧</h3>
+                            <div class="prose">
+                                <p class="first-letter">欧几里得用几条公理和公设，演绎推导出了整个几何学，这是人类思维的奇迹。他影响了西方许多哲学家、科学家、企业家的思考方式。甚至可以说，哲科思维就是工商业文明的底层算法语言。混沌大学是第一个，到目前为止可能还是唯一一个，把哲科思维推荐给中国创新者的学校。</p>
+                                
+                                <div class="bg-blue-50 
+								        <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>欧氏几何：人类思维的奇迹</li>
+                                        <li>一切学问都是证明系统</li>
+                                        <li>从《几何原本》到公理化思维</li>
+                                        <li>公理化思维的应用</li>
+                                        <li>让哲科思维点亮中国的创新者</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "欧几里得用几条公理和公设，演绎推导出了整个几何学，这是人类思维的奇迹。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第三章 -->
+                    <div id="chapter3" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">03</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第三章 破界创新：打破基石，边界外延</h3>
+                            <div class="prose">
+                                <p class="first-letter">破界创新是指打破既有认知边界，从根本上重新思考问题，实现突破性创新。本章探讨了破界创新的三部曲、难点以及在科学和商业领域的应用案例，包括IBM和乔布斯的创新故事，以及如何成为真正的创新企业家。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>破界创新三部曲</li>
+                                        <li>破界创新的难点</li>
+                                        <li>科学领域的破界创新</li>
+                                        <li>IBM和乔布斯的破界创新</li>
+                                        <li>成为创新企业家</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "破界创新是指打破既有认知边界，从根本上重新思考问题，实现突破性创新。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第四章 -->
+                    <div id="chapter4" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">04</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第四章 组织刷新：使命—战略的破界创新</h3>
+                            <div class="prose">
+                                <p class="first-letter">本章以微软为例，探讨了组织如何通过刷新使命、文化和战略，实现破界创新。纳德拉接替鲍尔默成为微软CEO后，如何带领微软重新找回创新活力，是组织刷新的典型案例。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>鲍尔默时代的迷失</li>
+                                        <li>纳德拉刷新微软</li>
+                                        <li>刷新使命</li>
+                                        <li>刷新文化</li>
+                                        <li>刷新战略</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "组织刷新不仅仅是战略调整，更是从使命和文化层面的根本性变革。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第五章 -->
+                    <div id="chapter5" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">05</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第五章 第一创新：基于第一性原理进行创新</h3>
+                            <div class="prose">
+                                <p class="first-letter">本章探讨如何基于第一性原理进行创新，从归纳创新转向演绎创新，并分析查理·芒格和埃隆·马斯克的创新思维模式。第一创新是一种从根本原理出发，而非从现有解决方案改进的创新方式。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>从归纳创新到演绎创新</li>
+                                        <li>基于第一性原理的第一创新</li>
+                                        <li>查理·芒格的多元思维模型</li>
+                                        <li>人类文化的元知识</li>
+                                        <li>埃隆·马斯克的第一创新</li>
+                                        <li>第一创新的力量</li>
+                                        <li>源自使命的动机</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "第一创新是从根本原理出发的创新，而非从现有解决方案改进的创新。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第六章 -->
+                    <div id="chapter6" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">06</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第六章 万物至理：宇宙的终极密码</h3>
+                            <div class="prose">
+                                <p class="first-letter">本章以爱因斯坦的相对论为例，探讨了如何通过理念世界和思想实验，洞见公理并推导出革命性的理论。爱因斯坦通过质疑牛顿力学体系，提出了两个全新的基石假设，推导出了狭义相对论和广义相对论，用理论定义了现实。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>洞见公理比推导更加困难</li>
+                                        <li>理念世界与思想实验</li>
+                                        <li>对牛顿力学体系的质疑</li>
+                                        <li>两个全新的基石假设</li>
+                                        <li>推导出的狭义相对论</li>
+                                        <li>用理论定义现实</li>
+                                        <li>爱因斯坦的升维</li>
+                                        <li>推导出的广义相对论</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "洞见公理比推导更加困难，这是科学创新的核心挑战。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第七章 -->
+                    <div id="chapter7" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">07</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第七章 从众效应："真理"的真相</h3>
+                            <div class="prose">
+                                <p class="first-letter">本章探讨了两种真理观——真理符合论和真理连贯论，以及从众效应如何影响我们对真理的认知。我们常常陷入"所有人相信的真"的陷阱，难以跳出乌合之众的思维模式。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>两种真理观</li>
+                                        <li>真理符合论</li>
+                                        <li>真理连贯论</li>
+                                        <li>所有人相信的真</li>
+                                        <li>从众效应</li>
+                                        <li>逃不脱的乌合之众</li>
+                                        <li>认知如何跳出</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "我们常常陷入'所有人相信的真'的陷阱，难以跳出乌合之众的思维模式。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第八章 -->
+                    <div id="chapter8" class="mb-16 fade-in">
+                        <div class="chapter-card p-6 md:p-8 relative">
+                            <div class="chapter-number">08</div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--primary-color);">第八章 批判性思维：我讲的可能都是错的</h3>
+                            <div class="prose">
+                                <p class="first-letter">本章探讨了批判性思维的重要性，包括逻辑三洽、主体性认同、群体信念等概念。作者提出了不可知论和反共识的思想，强调了独立思考和质疑精神对创新的重要性。</p>
+                                
+                                <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg my-6">
+                                    <h4 class="font-bold text-lg mb-2">本章关键点</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>逻辑三洽</li>
+                                        <li>主体性认同</li>
+                                        <li>群体信念</li>
+                                        <li>批判性思维</li>
+                                        <li>不可知论</li>
+                                        <li>反共识</li>
+                                    </ul>
+                                </div>
+                                
+                                <blockquote>
+                                    "创新精神的第一特征是批判性思维，独立思考，普遍怀疑，反共识。"
+                                </blockquote>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <a href="#" class="inline-block px-4 py-2 rounded-md text-white transition-all hover:shadow-lg" style="background-color: var(--primary-color);">
+                                    阅读更多 <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 思维导图 -->
+    <section id="mindmap" class="py-16 bg-white dark:bg-gray-900">
+        <div class="container px-4 mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center" style="color: var(--primary-color);">第一性原理思维导图</h2>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <div class="mermaid">
+                    graph TD
+                    A[第一性原理] --> B[归纳法]
+                    A --> C[演绎法]
+                    B --> B1[空间性归纳]
+                    B --> B2[时间性归纳]
+                    B --> B3[连续性假设]
+                    B --> B4[只能证伪不能证明]
+                    C --> C1[三段论]
+                    C --> C2[逻辑自洽]
+                    C --> C3[前提准确性]
+                    A --> D[公理化思维]
+                    D --> D1[欧氏几何]
+                    D --> D2[证明系统]
+                    A --> E[破界创新]
+                    E --> E1[打破基石]
+                    E --> E2[边界外延]
+                    E --> E3[创新三部曲]
+                    A --> F[第一创新]
+                    F --> F1[芒格多元思维模型]
+                    F --> F2[马斯克创新方法]
+                    A --> G[批判性思维]
+                    G --> G1[反共识]
+                    G --> G2[独立思考]
+                    G --> G3[普遍怀疑]
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 延伸阅读 -->
+    <section id="further-reading" class="py-16 bg-gray-50 dark:bg-gray-800" style="background-color: var(--bg-color);">
+        <div class="container px-4 mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center" style="color: var(--primary-color);">延伸阅读</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="book-card fade-in">
+                    <div class="book-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">《思考，快与慢》</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">丹尼尔·卡尼曼</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-500">
+                        诺贝尔经济学奖得主卡尼曼的代表作，探讨了人类思维的两种模式：快速、直觉和情绪的系统1，以及缓慢、深思熟虑和理性的系统2。
+                    </p>
+                </div>
+                
+                <div class="book-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="book-cover" style="background-color: var(--accent-color);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">《穷查理宝典》</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">彼得·考夫曼</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-500">
+                        收录了查理·芒格的演讲和文章，展示了他的多元思维模型和跨学科思考方法，是理解第一性原理思维的重要参考。
+                    </p>
+                </div>
+                
+                <div class="book-card fade-in" style="transition-delay: 0.4s;">
+                    <div class="book-cover" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">《从0到1》</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">彼得·蒂尔</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-500">
+                        PayPal创始人彼得·蒂尔的创业思想，强调了创新的重要性和如何通过独特的思考方式创造全新的事物。
+                    </p>
+                </div>
+                
+                <div class="book-card fade-in" style="transition-delay: 0.6s;">
+                    <div class="book-cover" style="background-color: #6b7280;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">《刷新：重新发现商业与未来》</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">萨提亚·纳德拉</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-500">
+                        微软CEO纳德拉的自传，详细描述了他如何通过刷新使命、文化和战略，带领微软重新找回创新活力。
+                    </p>
+                </div>
+                
+                <div class="book-card fade-in" style="transition-delay: 0.8s;">
+                    <div class="book-cover" style="background-color: #4b5563;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">《爱因斯坦传》</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">沃尔特·艾萨克森</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-500">
+                        详细描述了爱因斯坦的生平和思想，展示了他如何通过思想实验和第一性原理思考，推导出革命性的相对论。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 作者信息 -->
+    <section id="author" class="py-16 bg-white dark:bg-gray-900">
+        <div class="container px-4 mx-auto">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="author-avatar mb-6 md:mb-0 md:mr-8">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBmMzQ2MCIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSI0MCIgZmlsbD0iI2U5NDU2MCIvPjxwYXRoIGQ9Ik01MCwxNjAgQzUwLDExMCAxNTAsMTEwIDE1MCwxNjAiIGZpbGw9IiNlOTQ1NjAiLz48L3N2Zz4=" alt="李善友" class="rounded-full">
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color: var(--primary-color);">关于作者</h2>
+                        <h3 class="text-xl font-bold mb-2">李善友</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            混沌大学创始人，中欧国际工商学院客座教授，著名创新思想家。致力于将哲科思维应用于创新创业领域，帮助中国创业者实现突破性创新。
+                        </p>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                                <i class="fab fa-weixin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">作者寄语</h3>
+                    <blockquote class="italic">
+                        "走入混沌，是为了走出混沌。真理，在洞穴之外，阳光之下。我希望通过这本书，帮助更多的中国创新者掌握第一性原理思维，实现突破性创新，创造更美好的未来。"
+                    </blockquote>
+                    <p class="text-right mt-4 text-gray-600 dark:text-gray-400">— 李善友</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer class="bg-gray-100 dark:bg-gray-900 py-12">
+        <div class="container px-4 mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-2xl font-bold" style="color: var(--primary-color);">第一性原理</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">李善友 著 · 人民邮电出版社</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                        <i class="fab fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                        <i class="fab fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400 text-sm">
+                <p>© 2023 第一性原理. 版权所有.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 初始化Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
+            securityLevel: 'loose'
+        });
+        
+        // 深色模式切换
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        
+        // 检查系统偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.add('dark');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+			
+			            '<i class="fas fa-sun"></i>';
+            // 更新Mermaid图表主题
+            mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        } else {
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        
+        // 切换深色/浅色模式
+        darkModeToggle.addEventListener('click', function() {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                // 更新Mermaid图表主题
+                mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                // 更新Mermaid图表主题
+                mermaid.initialize({ startOnLoad: false, theme: 'default' });
+            }
+            // 重新渲染图表
+            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+        });
+        
+        // 滚动动画
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = function() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                } else {
+                    element.classList.remove('active');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        fadeInOnScroll(); // 初始检查
+        
+        // 目录导航
+        const tocLinks = document.querySelectorAll('.toc-link');
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                
+                // 移动端关闭目录
+                if (window.innerWidth < 768) {
+                    document.getElementById('tocContent').classList.add('hidden');
+                    document.getElementById('tocToggle').classList.remove('active');
+                }
+            });
+        });
+        
+        // 移动端目录切换
+        const tocToggle = document.getElementById('tocToggle');
+        const tocContent = document.getElementById('tocContent');
+        
+        if (tocToggle && tocContent) {
+            tocToggle.addEventListener('click', function() {
+                tocContent.classList.toggle('hidden');
+                this.classList.toggle('active');
+            });
+        }
+        
+        // 章节卡片悬停效果
+        const chapterCards = document.querySelectorAll('.chapter-card');
+        
+        chapterCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('hover');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('hover');
+            });
+        });
+        
+        // 引言打字效果
+        const quoteElement = document.getElementById('typingQuote');
+        if (quoteElement) {
+            const quoteText = quoteElement.textContent;
+            quoteElement.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < quoteText.length) {
+                    quoteElement.textContent += quoteText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            };
+            
+            // 当引言区域进入视口时开始打字效果
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typeWriter();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(quoteElement.parentElement);
+        }
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>

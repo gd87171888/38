@@ -1,0 +1,105 @@
+.crystal-stone {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 15;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.crystal-stone:hover {
+    transform: scale(1.2) rotate(15deg) !important;
+}
+
+.crystal-stone-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.7), rgba(0, 255, 255, 0.7), rgba(255, 255, 0, 0.7));
+    animation: colorShift 5s infinite alternate;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.5);
+    opacity: 0.85;
+}
+
+.crystal-facet {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: sparkle 3s infinite alternate;
+}
+
+.crystal-facet:nth-child(1) {
+    top: 5px;
+    left: 15px;
+    transform: rotate(15deg);
+}
+
+.crystal-facet:nth-child(2) {
+    bottom: 5px;
+    right: 15px;
+    transform: rotate(45deg);
+}
+
+.crystal-facet:nth-child(3) {
+    top: 15px;
+    right: 5px;
+    transform: rotate(75deg);
+}
+
+.crystal-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    opacity: 0;
+    animation: glowPulse 2s infinite;
+}
+
+@keyframes colorShift {
+    0% { background: linear-gradient(135deg, rgba(255, 0, 255, 0.7), rgba(0, 255, 255, 0.7), rgba(255, 255, 0, 0.7)); }
+    33% { background: linear-gradient(135deg, rgba(0, 255, 255, 0.7), rgba(255, 255, 0, 0.7), rgba(255, 0, 255, 0.7)); }
+    66% { background: linear-gradient(135deg, rgba(255, 255, 0, 0.7), rgba(255, 0, 255, 0.7), rgba(0, 255, 255, 0.7)); }
+    100% { background: linear-gradient(135deg, rgba(255, 0, 255, 0.7), rgba(0, 255, 255, 0.7), rgba(255, 255, 0, 0.7)); }
+}
+
+@keyframes sparkle {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.3; }
+}
+
+@keyframes glowPulse {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes stoneFloat {
+    0% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(10px) rotate(-5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+.crystal-spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 5px white, 0 0 8px rgba(255, 255, 255, 0.8);
+    opacity: 0.8;
+    animation: crystalSparkAnimation 0.8s linear forwards;
+}
+
+@keyframes crystalSparkAnimation {
+    0% { transform: translate(0, 0) scale(0.5); opacity: 0.8; }
+    100% { transform: translate(var(--moveX), var(--moveY)) scale(1.5); opacity: 0; }
+}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理学可视化探索</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Matter.js (物理引擎) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+    <!-- Three.js (3D可视化) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    
+    <style>
+        .physics-card {
+            transition: all 0.3s ease;
+        }
+        
+        .physics-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .canvas-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">物理学可视化探索</h1>
+            <p class="mt-2">通过互动可视化理解物理世界的奥秘</p>
+        </div>
+    </header>
+
+    <nav class="bg-blue-800 text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-1 overflow-x-auto py-2">
+                <a href="#" class="nav-link px-4 py-2 rounded-md bg-blue-700" data-section="classical-mechanics">经典力学</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-blue-600" data-section="electromagnetism">电磁学</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-blue-600" data-section="thermodynamics">热力学</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-blue-600" data-section="quantum-mechanics">量子力学</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-blue-600" data-section="relativity">相对论</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-blue-600" data-section="fluid-dynamics">流体动力学</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 经典力学部分 -->
+        <section id="classical-mechanics" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12">
+            <h2 class="text-2xl font-bold mb-4">经典力学：运动与力</h2>
+            <p class="mb-6">经典力学研究物体的运动和受力情况，是物理学的基础分支。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">牛顿运动定律模拟</h3>
+                    <p class="mb-4">探索物体在不同力的作用下的运动：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">模拟类型：</label>
+                        <select id="mechanics-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="pendulum">单摆</option>
+                            <option value="spring">弹簧振子</option>
+                            <option value="projectile">抛体运动</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            重力加速度：<span id="gravity-value">9.8</span> m/s²
+                        </label>
+                        <input type="range" id="gravity-range" min="0" max="20" value="9.8" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            阻尼系数：<span id="damping-value">0.1</span>
+                        </label>
+                        <input type="range" id="damping-range" min="0" max="1" value="0.1" step="0.01" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <button id="reset-mechanics" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        重置模拟
+                    </button>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="mechanics-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>牛顿第一定律</strong>：物体在没有外力作用下，会保持静止或匀速直线运动状态。</li>
+                    <li><strong>牛顿第二定律</strong>：物体加速度与所受合外力成正比，与质量成反比。F = ma</li>
+                    <li><strong>牛顿第三定律</strong>：作用力与反作用力大小相等，方向相反。</li>
+                    <li><strong>能量守恒</strong>：在孤立系统中，能量总量保持不变，只会在不同形式之间转换。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 电磁学部分 -->
+        <section id="electromagnetism" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">电磁学：电场与磁场</h2>
+            <p class="mb-6">电磁学研究电荷、电流与电磁场之间的相互作用，是现代技术的基础。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">电磁场可视化</h3>
+                    <p class="mb-4">探索电荷和电流产生的电磁场：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">场类型：</label>
+                        <select id="field-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="electric">电场</option>
+                            <option value="magnetic">磁场</option>
+                            <option value="electromagnetic">电磁波</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            电荷/电流强度：<span id="charge-value">1</span>
+                        </label>
+                        <input type="range" id="charge-range" min="-5" max="5" value="1" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="show-field-lines" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                            显示场线
+                        </label>
+                    </div>
+                    
+                    <button id="add-charge" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        添加电荷/电流
+                    </button>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="em-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>库仑定律</strong>：描述电荷之间的相互作用力，与距离平方成反比。</li>
+                    <li><strong>高斯定律</strong>：描述电场通量与电荷的关系。</li>
+                    <li><strong>法拉第电磁感应定律</strong>：变化的磁场产生电场。</li>
+                    <li><strong>麦克斯韦方程组</strong>：统一描述电场和磁场的四个基本方程。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 热力学部分 -->
+        <section id="thermodynamics" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">热力学：能量与熵</h2>
+            <p class="mb-6">热力学研究热能与其他形式能量之间的转换，以及这些能量如何影响物质。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">分子运动模拟</h3>
+                    <p class="mb-4">探索温度对分子运动的影响：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">模拟类型：</label>
+                        <select id="thermo-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="ideal-gas">理想气体</option>
+                            <option value="phase-change">相变</option>
+                            <option value="heat-transfer">热传导</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            温度：<span id="temperature-value">300</span> K
+                        </label>
+                        <input type="range" id="temperature-range" min="100" max="1000" value="300" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            压力：<span id="pressure-value">1</span> atm
+                        </label>
+                        <input type="range" id="pressure-range" min="0.1" max="5" value="1" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg text-sm">
+                        <p id="entropy-value"><strong>熵：</strong> 5.67 J/K</p>
+                        <p id="energy-value"><strong>内能：</strong> 4.25 kJ</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="thermo-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>热力学第一定律</strong>：能量守恒，系统内能的变化等于热量与功的代数和。</li>
+                    <li><strong>热力学第二定律</strong>：熵增原理，孤立系统的熵总是增加的。</li>
+                    <li><strong>理想气体状态方程</strong>：PV = nRT，描述气体的压力、体积、温度关系。</li>
+                    <li><strong>玻尔兹曼常数</strong>：连接微观与宏观热力学的桥梁。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 量子力学部分 -->
+        <section id="quantum-mechanics" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">量子力学：微观世界的规律</h2>
+            <p class="mb-6">量子力学描述原子和亚原子尺度的物理现象，挑战了我们对现实的直觉理解。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">量子现象可视化</h3>
+                    <p class="mb-4">探索量子力学的基本概念：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">量子系统：</label>
+                        <select id="quantum-system" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="particle-in-box">盒中粒子</option>
+                            <option value="harmonic-oscillator">量子谐振子</option>
+                            <option value="hydrogen">氢原子</option>
+                            <option value="tunneling">量子隧穿</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            能级：<span id="energy-level-value">1</span>
+                        </label>
+                        <input type="range" id="energy-level-range" min="1" max="5" value="1" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="show-probability" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                            显示概率密度
+                        </label>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-purple-50 dark:bg-purple-900/30 rounded-lg text-sm">
+                        <p><strong>波函数</strong>是量子系统的完整描述，其平方表示在特定位置找到粒子的概率密度。</p>
+                        <p class="mt-2"><strong>不确定性原理</strong>表明粒子的位置和动量不能同时被精确测量。</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="quantum-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>薛定谔方程</strong>：描述量子系统波函数如何随时间演化。</li>
+                    <li><strong>海森堡不确定性原理</strong>：位置和动量不能同时被精确测量。</li>
+                    <li><strong>量子叠加</strong>：量子系统可以同时处于多个状态的叠加。</li>
+                    <li><strong>量子纠缠</strong>：两个粒子可以以一种无法单独描述的方式关联。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 相对论部分 -->
+        <section id="relativity" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">相对论：时空与引力</h2>
+            <p class="mb-6">相对论彻底改变了我们对时间、空间和引力的理解，是现代物理学的基石之一。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">相对论效应可视化</h3>
+                    <p class="mb-4">探索高速运动和强引力场的奇特效应：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">效应类型：</label>
+                        <select id="relativity-effect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="time-dilation">时间膨胀</option>
+                            <option value="length-contraction">长度收缩</option>
+                            <option value="space-curvature">空间弯曲</option>
+                            <option value="black-hole">黑洞</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            速度（相对光速）：<span id="velocity-value">0.5</span>c
+                        </label>
+                        <input type="range" id="velocity-range" min="0" max="0.99" value="0.5" step="0.01" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            质量：<span id="mass-value">5</span> 太阳质量
+                        </label>
+                        <input type="range" id="mass-range" min="0" max="20" value="5" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-sm">
+                        <p id="time-dilation-value"><strong>时间膨胀因子：</strong> 1.15</p>
+                        <p id="space-curvature-value"><strong>空间曲率：</strong> 0.25</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="relativity-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>狭义相对论</strong>：处理匀速运动参考系，引入时间膨胀和长度收缩。</li>
+                    <li><strong>广义相对论</strong>：将引力解释为时空弯曲，预测了黑洞和引力波。</li>
+                    <li><strong>质能方程</strong>：E = mc²，质量和能量的等价性。</li>
+                    <li><strong>光速不变原理</strong>：光速在所有惯性参考系中都相同。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 流体动力学部分 -->
+        <section id="fluid-dynamics" class="physics-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">流体动力学：流动与湍流</h2>
+            <p class="mb-6">流体动力学研究液体和气体的流动行为，从河流到大气环流，从血液流动到星系形成。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">流体流动模拟</h3>
+                    <p class="mb-4">探索不同条件下的流体行为：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">流体类型：</label>
+                        <select id="fluid-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="laminar">层流</option>
+                            <option value="turbulent">湍流</option>
+                            <option value="vortex">涡流</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            流速：<span id="flow-speed-value">2</span> m/s
+                        </label>
+                        <input type="range" id="flow-speed-range" min="0.1" max="10" value="2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            粘度：<span id="viscosity-value">1</span>
+                        </label>
+                        <input type="range" id="viscosity-range" min="0.1" max="5" value="1" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="show-pressure" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                            显示压力分布
+                        </label>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-cyan-50 dark:bg-cyan-900/30 rounded-lg text-sm">
+                        <p id="reynolds-number"><strong>雷诺数：</strong> 2000</p>
+                        <p id="bernoulli-effect"><strong>伯努利效应：</strong> 压力差 0.5 kPa</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="fluid-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>纳维-斯托克斯方程</strong>：描述流体运动的基本方程。</li>
+                    <li><strong>伯努利原理</strong>：流体速度增加时，压力降低。</li>
+                    <li><strong
+					<li><strong>雷诺数</strong>：表征流体从层流向湍流转变的无量纲参数。</li>
+<li><strong>连续性方程</strong>：表达质量守恒原理在流体中的应用。</li>
+</ul>
+</div>
+</section>
+</main>
+<footer class="bg-gray-800 text-white py-6">
+<div class="container mx-auto px-4 text-center">
+<p>物理学可视化探索 - 通过互动理解物理世界</p>
+<p class="text-sm text-gray-400 mt-2">从经典力学到量子力学，从电磁学到相对论</p>
+</div>
+</footer>
+<!-- 引入自定义脚本 -->
+<script src="physics.js"></script>
+</body>
+</html>

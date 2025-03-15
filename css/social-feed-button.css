@@ -1,0 +1,73 @@
+.social-feed-toggle {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ffff;
+    border-radius: 30px;
+    color: #00ffff;
+    font-size: 16px;
+    cursor: move;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    user-select: none;
+}
+
+.social-feed-toggle:hover {
+    transform: translateX(-50%) scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.social-feed-toggle:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
+    z-index: -1;
+    /* animation: glowRotate 6s infinite linear; */ /* 移除旋转动画 */
+    opacity: 0.3;
+}
+
+.social-feed-toggle .icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.social-feed-toggle.active {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: #ff00ff;
+    color: #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+}
+
+.social-feed-toggle.active:before {
+    background: linear-gradient(45deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+}
+
+/* 添加动画效果 */
+@keyframes glowRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(90deg); }
+}
+
+/* 社交推文容器的显示/隐藏动画 */
+.social-feed-container {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.social-feed-container.hidden {
+    transform: translateX(350px);
+    opacity: 0;
+    pointer-events: none;
+}

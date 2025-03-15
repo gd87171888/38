@@ -1,0 +1,323 @@
+.thought-feed-toggle {
+    position: fixed;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ff00;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    user-select: none;
+    top: 200px; /* 将人生感悟按钮移到AI新闻按钮下方 */
+    right: 20px; /* 移到右侧与三体宇宙按钮对齐 */
+    color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    width: 160px;
+    height: auto;
+}
+
+.thought-feed-toggle:hover {
+    transform: scale(1.02) !important; /* 修改悬停效果，移除水平居中 */
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.thought-feed-toggle:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+}
+
+.thought-feed-toggle:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+    opacity: 0.3;
+    /* animation: glowRotate 6s infinite linear; */ /* 移除旋转动画 */
+}
+
+.thought-feed-toggle:before {
+    background: linear-gradient(45deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1), rgba(0, 255, 0, 0.1));
+}
+
+.thought-feed-toggle .icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.thought-feed-toggle:after {
+    content: '人生感悟';
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.thought-feed-container {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.thought-feed-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.thought-feed-container.hidden {
+    transform: translateX(-350px);
+}
+
+.thought-feed-container {
+    position: fixed;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background

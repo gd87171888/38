@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三体宇宙 | 交互体验</title>
+    <style>
+        :root {
+            --primary-color: #0f1923;
+            --secondary-color: #1e3d59;
+            --accent-color: #43b0f1;
+            --text-color: #e8e8e8;
+            --danger-color: #ff304f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+        
+        .counter {
+            font-size: 2rem;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .three-body {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+        
+        .body {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: 90px;
+            left: 90px;
+            transition: background-color 0.5s ease;
+        }
+        
+        .body-1 {
+            background-color: #ff304f;
+            animation: orbit1 10s linear infinite;
+        }
+        
+        .body-2 {
+            background-color: #43b0f1;
+            animation: orbit2 8s linear infinite;
+        }
+        
+        .body-3 {
+            background-color: #28C76F;
+            animation: orbit3 12s linear infinite;
+        }
+        
+        @keyframes orbit1 {
+            0% { transform: translate(0, 0) }
+            25% { transform: translate(80px, 40px) }
+            50% { transform: translate(40px, 80px) }
+            75% { transform: translate(-40px, 40px) }
+            100% { transform: translate(0, 0) }
+        }
+        
+        @keyframes orbit2 {
+            0% { transform: translate(0, 0) }
+            33% { transform: translate(-60px, -60px) }
+            66% { transform: translate(60px, -60px) }
+            100% { transform: translate(0, 0) }
+        }
+        
+        @keyframes orbit3 {
+            0% { transform: translate(0, 0) }
+            20% { transform: translate(40px, -70px) }
+            40% { transform: translate(70px, 0) }
+            60% { transform: translate(40px, 70px) }
+            80% { transform: translate(-40px, 40px) }
+            100% { transform: translate(0, 0) }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(15, 25, 35, 0.9);
+            padding: 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .starfield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeIn 2s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid var(--accent-color);
+            background-color: transparent;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: var(--accent-color);
+            transition: width 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        .section {
+            padding: 100px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 三体问题模拟 */
+        .three-body-sim {
+            background-color: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .simulation-container {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center center;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .planet-1 {
+            width: 40px;
+            height: 40px;
+            background-color: #ff304f;
+            top: 50%;
+            left: 30%;
+        }
+        
+        .planet-2 {
+            width: 60px;
+            height: 60px;
+            background-color: #43b0f1;
+            top: 30%;
+            left: 50%;
+        }
+        
+        .planet-3 {
+            width: 30px;
+            height: 30px;
+            background-color: #28C76F;
+            top: 60%;
+            left: 60%;
+        }
+        
+        .planet:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        
+        .sim-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .sim-btn {
+            margin: 0 10px 10px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .sim-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        /* ETO 密码解析 */
+        .decrypt {
+            background-color: var(--primary-color);
+        }
+        
+        .decrypt-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(30, 61, 89, 0.4);
+            border-radius: 10px;
+        }
+        
+        .encrypt-text {
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .decrypt-input {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+        
+        .hint-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        /* 降维打击 */
+        .dimension {
+            background-color: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dimension-container {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        
+        .cube-container {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+        
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+        
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(67, 176, 241, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            transition: all 0.5s ease;
+            backface-visibility: visible;
+        }
+        
+        .front { transform: translateZ(100px); }
+        .back { transform: rotateY(180deg) translateZ(100px); }
+        .right { transform: rotateY(90deg) translateZ(100px); }
+        .left { transform: rotateY(-90deg) translateZ(100px); }
+        .top { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+        
+        .dimension-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .dimension-btn {
+            margin: 0 10px 10px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .dimension-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        /* 黑暗森林 */
+        .dark-forest {
+            background-color: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .universe-container {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .civilization {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .broadcast-btn {
+            margin-top: 30px;
+            padding: 10px 30px;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            padding: 50px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 30px;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: rgba(232, 232, 232, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(15, 25, 35, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                clip-path: circle(0px at 100% 0);
+                transition: all 0.5s ease-out;
+                pointer-events: none;
+            }
+            
+            .nav-links.active {
+                clip-path: circle(1000px at 90% 10%);
+                pointer-events: all;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载界面 -->
+    <div class="loading-screen">
+        <div class="three-body">
+            <div class="body body-1"></div>
+            <div class="body body-2"></div>
+            <div class="body body-3"></div>
+        </div>
+        <div class="counter">0%</div>
+        <div class="loading-text">初始化三体文明...</div>
+    </div>
+    
+    <!-- 导航 -->
+    <nav>
+        <div class="logo">三体<span>宇宙</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#three-body-sim">三体问题</a></li>
+            <li><a href="#decrypt">ETO密码</a></li>
+            <li><a href="#dimension">降维打击</a></li>
+            <li><a href="#dark-forest">黑暗森林</a></li>
+        </ul>
+        <div class="menu-toggle">☰</div>
+    </nav>
+    
+    <!-- 首页 -->
+    <section id="home" class="hero">
+        <div class="starfield"></div>
+        <div class="hero-content">
+            <h1>探索<span style="color: var(--accent-color);">三体</span>宇宙</h1>
+            <p>在这个交互式平台上，体验刘慈欣《三体》小说中的关键概念和科幻元素。从三体问题的混沌不可预测性，到降维打击的空间维度转化，再到黑暗森林法则的宇宙文明生存理论。</p>
+            <a href="#three-body-sim" class="btn">开始探索</a>
+        </div>
+    </section>
+    
+    <!-- 三体问题模拟 -->
+    <section id="three-body-sim" class="section three-body-sim">
+        <h2 class="section-title">三体问题</h2>
+        <p class="section-subtitle">体验三星系统的混沌不可预测性。拖动恒星，观察轨道如何剧烈变化，就像三体星系中的不稳定气候。</p>
+        
+        <div class="simulation-container">
+            <div class="planet planet-1" data-mass="10"></div>
+            <div class="planet planet-2" data-mass="15"></div>
+            <div class="planet planet-3" data-mass="8"></div>
+        </div>
+        
+        <div class="sim-controls">
+            <button class="sim-btn" id="start-sim">开始模拟</button>
+            <button class="sim-btn" id="reset-sim">重置</button>
+            <button class="sim-btn" id="chaotic-sim">混沌模式</button>
+            <button class="sim-btn" id="stable-sim">稳定模式</button>
+        </div>
+    </section>
+    
+    <!-- ETO 密码解析 -->
+    <section id="decrypt" class="section decrypt">
+        <h2 class="section-title">ETO密码解析</h2>
+        <p class="section-subtitle">尝试解读地球三体组织的加密信息，了解人类是如何与三体文明沟通的。</p>
+        
+        <div class="decrypt-container">
+            <div class="encrypt-text" id="encrypted-message">
+                ＊£⌘⚔Ω∞♞✧♛⚝⚓〄✠⛥⛓☢☯⑁⑄⑅⬖➧☥❊⚜⚱⚰ⱡ△☮☸⍟♠♣♥♦♤♧♡♢✸ΘΞΦδθφ
+            </div>
+            <input type="text" class="decrypt-input" id="decrypt-input" placeholder="输入你的解密尝试...">
+            <button class="btn" id="decrypt-btn">尝试解密</button>
+            <div class="hint-container" id="hint-container">
+                <h3>解密提示：</h3>
+                <p id="hint-text"></p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 降维打击 -->
+    <section id="dimension" class="section dimension">
+        <h2 class="section-title">降维打击</h2>
+        <p class="section-subtitle">体验维度的概念，就像三体中的智子如何通过降低空间维度来实现对人类科技的锁定。</p>
+        
+        <div class="dimension-container">
+            <div class="cube-container">
+                <div class="cube">
+                    <div class="face front">3D</div>
+                    <div class="face back">3D</div>
+                    <div class="face right">3D</div>
+                    <div class="face left">3D</div>
+                    <div class="face top">3D</div>
+                    <div class="face bottom">3D</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dimension-controls">
+            <button class="dimension-btn" id="dimension-3d">3D视图</button>
+            <button class="dimension-btn" id="dimension-2d">2D降维</button>
+            <button class="dimension-btn" id="dimension-1d">1D降维</button>
+            <button class="dimension-btn" id="dimension-collapse">维度折叠</button>
+        </div>
+    </section>
+    
+    <!-- 黑暗森林 -->
+    <section id="dark-forest" class="section dark-forest">
+        <h2 class="section-title">黑暗森林</h2>
+        <p class="section-subtitle">探索宇宙文明的生存法则 - 所有文明都是猎手，暴露自己的位置意味着毁灭。</p>
+        
+        <div class="universe-container" id="universe">
+            <!-- 文明将在JS中动态生成 -->
+        </div>
+        
+        <div class="sim-controls">
+            <button class="btn broadcast-btn" id="broadcast-btn">广播你的位置</button>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p>《三体》宇宙交互体验是一个致敬刘慈欣经典科幻小说《三体》的项目。通过互动元素帮助读者更深入地理解小说中的关键概念。</p>
+            <ul class="footer-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#three-body-sim">三体问题</a></li>
+                <li><a href="#decrypt">ETO密码</a></li>
+                <li><a href="#dimension">降维打击</a></li>
+                <li><a href="#dark-forest">黑暗森林</a></li>
+            </ul>
+            <p class="copyright">© 2025 三体宇宙交互体验 | 灵感来源：刘慈欣《三体》三部曲</p>
+        </div>
+    </footer>
+
+    <script>
+        // 加载动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const counter = document.querySelector('.counter');
+            const loadingText = document.querySelector('.loading-text');
+            let loadingProgress = 0;
+            
+            const loadingTexts = [
+                "初始化三体文明...",
+                "连接智子网络...",
+                "校准宇宙坐标...",
+                "激活黑暗森林防御...",
+                "飞向群星..."
+            ];
+            
+            const loadingInterval = setInterval(() => {
+                loadingProgress += Math.floor(Math.random() * 3) + 1;
+                
+                if (loadingProgress >= 100) {
+                    loadingProgress = 100;
+                    counter.textContent = `${loadingProgress}%`;
+                    clearInterval(loadingInterval);
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = 0;
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1000);
+                    }, 500);
+                } else {
+                    counter.textContent = `${loadingProgress}%`;
+                    
+                    if (loadingProgress > 20 && loadingProgress <= 40) {
+                        loadingText.textContent = loadingTexts[1];
+                    } else if (loadingProgress > 40 && loadingProgress <= 60) {
+                        loadingText.textContent = loadingTexts[2];
+                    } else if (loadingProgress > 60 && loadingProgress <= 80) {
+                        loadingText.textContent = loadingTexts[3];
+                    } else if (loadingProgress > 80) {
+                        loadingText.textContent = loadingTexts[4];
+                    }
+                }
+            }, 100);
+            
+            // 创建星空背景
+            const starfield = document.querySelector('.starfield');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机大小
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机位置
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                
+                // 随机闪烁动画持续时间
+                const duration = Math.random() * 5 + 2;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                starfield.appendChild(star);
+            }
+            
+            // 导航菜单切换
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            
+            // 三体问题模拟
+            const simulationContainer = document.querySelector('.simulation-container');
+            const planets = document.querySelectorAll('.planet');
+            const startSimBtn = document.getElementById('start-sim');
+            const resetSimBtn = document.getElementById('reset-sim');
+            const chaoticSimBtn = document.getElementById('chaotic-sim');
+            const stableSimBtn = document.getElementById('stable-sim');
+            
+            let simulation = null;
+            let isDragging = false;
+            let selectedPlanet = null;
+            let planetPositions = [];
+            let planetVelocities = [];
+            
+            // 初始化行星位置
+            planets.forEach(planet => {
+                const rect = planet.getBoundingClientRect();
+                const containerRect = simulationContainer.getBoundingClientRect();
+                
+                planetPositions.push({
+                    x: rect.left - containerRect.left + rect.width / 2,
+                    y: rect.top - containerRect.top + rect.height / 2
+                });
+                
+                planetVelocities.push({ x: 0, y: 0 });
+                
+                // 使行星可拖动
+                planet.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    selectedPlanet = planet;
+                    e.preventDefault();
+                });
+            });
+            
+            // 鼠标移动事件
+            simulationContainer.addEventListener('mousemove', (e) => {
+                if (isDragging && selectedPlanet) {
+                    const containerRect = simulationContainer.getBoundingClientRect();
+                    const index = Array.from(planets).indexOf(selectedPlanet);
+                    
+                    selectedPlanet.style.left = `${e.clientX - containerRect.left - selectedPlanet.offsetWidth / 2}px`;
+                    selectedPlanet.style.top = `${e.clientY - containerRect.top - selectedPlanet.offsetHeight / 2}px`;
+                    
+                    planetPositions[index] = {
+                        x: e.clientX - containerRect.left,
+                        y: e.clientY - containerRect.top
+                    };
+                    
+                    planetVelocities[index] = { x: 0, y: 0 };
+                }
+            });
+            
+            // 释放鼠标
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                selectedPlanet = null;
+            });
+            
+            // 开始模拟
+            startSimBtn.addEventListener('click', () => {
+                if (simulation) {
+                    clearInterval(simulation);
+                }
+                
+                simulation = setInterval(() => {
+                    updatePlanetPositions();
+                }, 50);
+            });
+            
+            // 重置模拟
+            resetSimBtn.addEventListener('click', () => {
+                if (simulation) {
+                    clearInterval(simulation);
+                    simulation = null;
+                }
+                
+                planets.forEach((planet, index) => {
+                    const origPosition = planetPositions[index];
+                    planet.style.transition = 'all 0.5s ease';
+                    planet.style.left = `${origPosition.x - planet.offsetWidth / 2}px`;
+                    planet.style.top = `${origPosition.y - planet.offsetHeight / 2}px`;
+                    
+                    planetVelocities[index] = { x: 0, y: 0 };
+                    
+                    setTimeout(() => {
+                        planet.style.transition = 'none';
+                    }, 500);
+                });
+            });
+            
+            // 混沌模式
+            chaoticSimBtn.addEventListener('click', () => {
+                if (simulation) {
+                    clearInterval(simulation);
+                }
+                
+                // 给行星随机的初始速度
+                planetVelocities = planetVelocities.map(() => ({
+                    x: (Math.random() - 0.5) * 4,
+                    y: (Math.random() - 0.5) * 4
+                }));
+                
+                simulation = setInterval(() => {
+                    updatePlanetPositions();
+                }, 50);
+            });
+            
+            // 稳定模式
+            stableSimBtn.addEventListener('click', () => {
+                if (simulation) {
+                    clearInterval(simulation);
+                }
+                
+                // 设置一个稳定的轨道系统
+                planetVelocities[0] = { x: 1, y: 0 };
+                planetVelocities[1] = { x: 0, y: -1 };
+                planetVelocities[2] = { x: -0.8, y: 0.8 };
+                
+                simulation = setInterval(() => {
+                    updatePlanetPositions();
+                }, 50);
+            });
+            
+            // 更新行星位置函数
+            function updatePlanetPositions() {
+                const G = 1; // 重力常数
+                
+                // 计算重力
+                for (let i = 0; i < planets.length; i++) {
+                    let fx = 0;
+                    let fy = 0;
+                    
+                    for (let j = 0; j < planets.length; j++) {
+                        if (i !== j) {
+                            const dx = planetPositions[j].x - planetPositions[i].x;
+                            const dy = planetPositions[j].y - planetPositions[i].y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance > 5) { // 防止距离太近导致力过大
+                                const mass_j = parseFloat(planets[j].dataset.mass);
+                                const force = G * mass_j / (distance * distance);
+                                
+                                fx += force * dx / distance;
+                                fy += force * dy / distance;
+                            }
+                        }
+                    }
+                    
+                    // 更新速度
+                    planetVelocities[i].x += fx;
+                    planetVelocities[i].y += fy;
+                    
+                    // 限制最大速度
+                    const speed = Math.sqrt(planetVelocities[i].x * planetVelocities[i].x + planetVelocities[i].y * planetVelocities[i].y);
+                    if (speed > 10) {
+                        planetVelocities[i].x = (planetVelocities[i].x / speed) * 10;
+                        planetVelocities[i].y = (planetVelocities[i].y / speed) * 10;
+                    }
+                }
+                
+                // 更新位置
+                for (let i = 0; i < planets.length; i++) {
+                    planetPositions[i].x += planetVelocities[i].x;
+                    planetPositions[i].y += planetVelocities[i].y;
+                    
+                    planets[i].style.left = `${planetPositions[i].x - planets[i].offsetWidth / 2}px`;
+                    planets[i].style.top = `${planetPositions[i].y - planets[i].offsetHeight / 2}px`;
+                    
+                    // 检查边界反弹
+                    const containerRect = simulationContainer.getBoundingClientRect();
+                    const planetSize = planets[i].offsetWidth;
+                    
+                    if (planetPositions[i].x < planetSize / 2) {
+                        planetPositions[i].x = planetSize / 2;
+                        planetVelocities[i].x *= -0.8;
+                    } else if (planetPositions[i].x > containerRect.width - planetSize / 2) {
+                        planetPositions[i].x = containerRect.width - planetSize / 2;
+                        planetVelocities[i].x *= -0.8;
+                    }
+                    
+                    if (planetPositions[i].y < planetSize / 2) {
+                        planetPositions[i].y = planetSize / 2;
+                        planetVelocities[i].y *= -0.8;
+                    } else if (planetPositions[i].y > containerRect.height - planetSize / 2) {
+                        planetPositions[i].y = containerRect.height - planetSize / 2;
+                        planetVelocities[i].y *= -0.8;
+                    }
+                }
+            }
+            
+            // ETO密码解析
+            const encryptedMessage = document.getElementById('encrypted-message');
+            const decryptInput = document.getElementById('decrypt-input');
+            const decryptBtn = document.getElementById('decrypt-btn');
+            const hintContainer = document.getElementById('hint-container');
+            const hintText = document.getElementById('hint-text');
+            
+            const secretMessage = "我们是三体文明的朋友，帮助三体文明找到地球坐标。";
+            let decryptAttempts = 0;
+            
+            decryptBtn.addEventListener('click', () => {
+                const userAttempt = decryptInput.value.trim();
+                decryptAttempts++;
+                
+                if (userAttempt.length > 0) {
+                    let similarity = 0;
+                    for (let i = 0; i < Math.min(userAttempt.length, secretMessage.length); i++) {
+                        if (userAttempt[i] === secretMessage[i]) {
+                            similarity++;
+                        }
+                    }
+                    
+                    const similarityPercent = Math.floor((similarity / secretMessage.length) * 100);
+                    
+                    hintContainer.style.display = 'block';
+                    
+                    if (similarityPercent > 80) {
+                        hintText.innerHTML = `<span style="color: #28C76F;">解密成功！消息内容：${secretMessage}</span>`;
+                        encryptedMessage.textContent = secretMessage;
+                        encryptedMessage.style.fontFamily = 'Noto Sans SC, sans-serif';
+                    } else {
+                        hintText.innerHTML = `解密匹配度: ${similarityPercent}%<br>继续尝试！`;
+                        
+                        if (decryptAttempts >= 3) {
+                            hintText.innerHTML += `<br><br>提示：这是一条来自ETO的密信，关于他们与三体文明的关系。`;
+                        }
+                        
+                        if (decryptAttempts >= 5) {
+                            hintText.innerHTML += `<br><br>提示：密信内容的开头是"我们是三体文明的..."`;
+                        }
+                    }
+                }
+            });
+            
+            // 降维打击
+            const cube = document.querySelector('.cube');
+            const dimension3dBtn = document.getElementById('dimension-3d');
+            const dimension2dBtn = document.getElementById('dimension-2d');
+            const dimension1dBtn = document.getElementById('dimension-1d');
+            const dimensionCollapseBtn = document.getElementById('dimension-collapse');
+            
+            dimension3dBtn.addEventListener('click', () => {
+                cube.style.transform = 'translateZ(0)';
+                document.querySelectorAll('.face').forEach(face => {
+                    face.style.opacity = '1';
+                    face.textContent = '3D';
+                    face.style.transform = face.style.transform.replace('scale(0.01)', '');
+                });
+            });
+            
+            dimension2dBtn.addEventListener('click', () => {
+                cube.style.transform = 'translateZ(0) rotateX(0) rotateY(0)';
+                document.querySelectorAll('.face').forEach(face => {
+                    if (face.classList.contains('front')) {
+                        face.style.opacity = '1';
+                        face.textContent = '2D';
+                    } else {
+                        face.style.opacity = '0.2';
+                    }
+                });
+            });
+            
+            dimension1dBtn.addEventListener('click', () => {
+                cube.style.transform = 'translateZ(0) rotateX(0) rotateY(0)';
+                document.querySelectorAll('.face').forEach(face => {
+                    if (face.classList.contains('front')) {
+                        face.style.transform = face.style.transform + ' scaleY(0.01)';
+                        face.textContent = '1D';
+                        face.style.opacity = '1';
+                    } else {
+                        face.style.opacity = '0';
+                    }
+                });
+            });
+            
+            dimensionCollapseBtn.addEventListener('click', () => {
+                cube.style.transform = 'translateZ(0) scale(0.01)';
+                document.querySelectorAll('.face').forEach(face => {
+                    face.textContent = '0D';
+                });
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.face').forEach(face => {
+                        face.style.opacity = '0';
+                    });
+                }, 500);
+                
+                setTimeout(() => {
+                    cube.style.transform = 'translateZ(0) scale(1)';
+                    document.querySelectorAll('.face').forEach(face => {
+                        face.style.opacity = '1';
+                        face.textContent = '3D';
+                    });
+                }, 2000);
+            });
+            
+            // 黑暗森林模拟
+            const universe = document.getElementById('universe');
+            const broadcastBtn = document.getElementById('broadcast-btn');
+            
+            const civilizationColors = [
+                '#ff304f', '#43b0f1', '#28C76F', '#7367F0', '#EA5455', 
+                '#FF9F43', '#00CFE8', '#9C27B0', '#8BC34A', '#607D8B'
+            ];
+            
+            let civilizations = [];
+            const numCivilizations = 15;
+            
+            // 创建随机文明
+            function createCivilizations() {
+                universe.innerHTML = '';
+                civilizations = [];
+                
+                for (let i = 0; i < numCivilizations; i++) {
+                    const size = Math.random() * 20 + 10;
+                    const civilization = document.createElement('div');
+                    civilization.classList.add('civilization');
+                    civilization.style.width = `${size}px`;
+                    civilization.style.height = `${size}px`;
+                    civilization.style.backgroundColor = civilizationColors[i % civilizationColors.length];
+                    
+                    const x = Math.random() * (universe.offsetWidth - size);
+                    const y = Math.random() * (universe.offsetHeight - size);
+                    
+                    civilization.style.left = `${x}px`;
+                    civilization.style.top = `${y}px`;
+                    
+                    civilization.dataset.detected = 'false';
+                    civilization.dataset.broadcasting = 'false';
+                    civilization.dataset.id = i;
+                    civilization.textContent = i + 1;
+                    
+                    civilizations.push({
+                        element: civilization,
+                        x: x,
+                        y: y,
+                        size: size,
+                        speed: {
+                            x: (Math.random() - 0.5) * 1,
+                            y: (Math.random() - 0.5) * 1
+                        },
+                        detected: false,
+                        broadcasting: false
+                    });
+                    
+                    universe.appendChild(civilization);
+                    
+                    // 随机探测行为
+                    if (Math.random() < 0.3) {
+                        setTimeout(() => {
+                            civilizations[i].broadcasting = true;
+                            civilization.dataset.broadcasting = 'true';
+                            civilization.style.boxShadow = '0 0 10px 5px rgba(255, 255, 255, 0.7)';
+                            detectCivilizations(i);
+                        }, Math.random() * 10000 + 2000);
+                    }
+                }
+            }
+            
+            // 检测并清除广播文明
+            function detectCivilizations(broadcasterIndex) {
+                const broadcaster = civilizations[broadcasterIndex];
+                
+                // 找到最近的攻击者
+                let closestAttacker = null;
+                let minDistance = Infinity;
+                
+                civilizations.forEach((civ, index) => {
+                    if (index !== broadcasterIndex && !civ.broadcasting && !civ.detected) {
+                        const dx = civ.x - broadcaster.x;
+                        const dy = civ.y - broadcaster.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestAttacker = index;
+                        }
+                    }
+                });
+                
+                if (closestAttacker !== null) {
+                    const attacker = civilizations[closestAttacker];
+                    const attackerEl = attacker.element;
+                    
+                    // 创建攻击线
+                    const line = document.createElement('div');
+                    line.style.position = 'absolute';
+                    line.style.width = `${minDistance}px`;
+                    line.style.height = '2px';
+                    line.style.backgroundColor = 'rgba(255, 48, 79, 0.7)';
+                    line.style.transformOrigin = '0 0';
+                    
+                    const angle = Math.atan2(
+                        broadcaster.y - attacker.y,
+                        broadcaster.x - attacker.x
+                    );
+                    
+                    line.style.transform = `rotate(${angle}rad)`;
+                    line.style.left = `${attacker.x + attacker.size / 2}px`;
+                    line.style.top = `${attacker.y + attacker.size / 2}px`;
+                    
+                    universe.appendChild(line);
+                    
+                    // 延迟后攻击
+                    setTimeout(() => {
+                        // 爆炸动画
+                        const explosion = document.createElement('div');
+                        explosion.style.position = 'absolute';
+                        explosion.style.width = '100px';
+                        explosion.style.height = '100px';
+                        explosion.style.left = `${broadcaster.x - 50 + broadcaster.size / 2}px`;
+                        explosion.style.top = `${broadcaster.y - 50 + broadcaster.size / 2}px`;
+                        explosion.style.backgroundColor = 'rgba(255, 48, 79, 0.2)';
+                        explosion.style.borderRadius = '50%';
+                        explosion.style.boxShadow = '0 0 30px 15px rgba(255, 48, 79, 0.6)';
+                        explosion.style.transform = 'scale(0)';
+                        explosion.style.transition = 'transform 1s ease-out';
+                        
+                        universe.appendChild(explosion);
+                        
+                        setTimeout(() => {
+                            explosion.style.transform = 'scale(1)';
+                        }, 10);
+                        
+                        setTimeout(() => {
+                            universe.removeChild(line);
+                            universe.removeChild(explosion);
+                            universe.removeChild(broadcaster.element);
+                            
+                            civilizations[broadcasterIndex].detected = true;
+                            
+                            // 显示黑暗森林法则提示
+                            const message = document.createElement('div');
+                            message.style.position = 'absolute';
+                            message.style.top = '50%';
+                            message.style.left = '50%';
+                            message.style.transform = 'translate(-50%, -50%)';
+                            message.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                            message.style.color = '#fff';
+                            message.style.padding = '20px';
+                            message.style.borderRadius = '5px';
+                            message.style.textAlign = 'center';
+                            message.innerHTML = '黑暗森林法则：宇宙就是一座黑暗森林，每个文明都是带枪的猎人，在暗夜中潜行...<br>暴露自己，就意味着毁灭。';
+                            
+                            universe.appendChild(message);
+                            
+                            setTimeout(() => {
+                                universe.removeChild(message);
+                            }, 4000);
+                        }, 1000);
+                    }, 2000);
+                }
+            }
+            
+            // 广播按钮
+            broadcastBtn.addEventListener('click', () => {
+                // 创建玩家文明
+                const playerCiv = document.createElement('div');
+                playerCiv.classList.add('civilization');
+                playerCiv.style.width = '30px';
+                playerCiv.style.height = '30px';
+                playerCiv.style.backgroundColor = '#ffffff';
+                playerCiv.style.left = '50%';
+                playerCiv.style.top = '50%';
+                playerCiv.style.transform = 'translate(-50%, -50%)';
+                playerCiv.style.boxShadow = '0 0 20px 10px rgba(255, 255, 255, 0.8)';
+                playerCiv.style.zIndex = '10';
+                playerCiv.textContent = '你';
+                
+                universe.appendChild(playerCiv);
+                
+                // 创建广播波
+                const broadcast = document.createElement('div');
+                broadcast.style.position = 'absolute';
+                broadcast.style.width = '30px';
+                broadcast.style.height = '30px';
+                broadcast.style.left = '50%';
+                broadcast.style.top = '50%';
+                broadcast.style.transform = 'translate(-50%, -50%)';
+                broadcast.style.border = '2px solid white';
+                broadcast.style.borderRadius = '50%';
+                broadcast.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
+                broadcast.style.transition = 'all 3s ease-out';
+                
+                universe.appendChild(broadcast);
+                
+                setTimeout(() => {
+                    broadcast.style.width = '800px';
+                    broadcast.style.height = '800px';
+                    broadcast.style.opacity = '0';
+                }, 10);
+                
+                // 3秒后所有文明攻击
+                setTimeout(() => {
+                    const lines = [];
+                    civilizations.forEach((civ, index) => {
+                        if (!civ.detected) {
+                            // 创建攻击线
+                            const line = document.createElement('div');
+                            line.style.position = 'absolute';
+                            
+                            const dx = universe.offsetWidth / 2 - (civ.x + civ.size / 2);
+                            const dy = universe.offsetHeight / 2 - (civ.y + civ.size / 2);
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            line.style.width = `${distance}px`;
+                            line.style.height = '2px';
+                            line.style.backgroundColor = 'rgba(255, 48, 79, 0.7)';
+                            line.style.transformOrigin = '0 0';
+                            
+                            const angle = Math.atan2(dy, dx);
+                            
+                            line.style.transform = `rotate(${angle + Math.PI}rad)`;
+                            line.style.left = `${universe.offsetWidth / 2}px`;
+                            line.style.top = `${universe.offsetHeight / 2}px`;
+                            
+                            universe.appendChild(line);
+                            lines.push(line);
+                        }
+                    });
+                    
+                    // 爆炸动画
+                    setTimeout(() => {
+                        const explosion = document.createElement('div');
+                        explosion.style.position = 'absolute';
+                        explosion.style.width = '200px';
+                        explosion.style.height = '200px';
+                        explosion.style.left = '50%';
+                        explosion.style.top = '50%';
+                        explosion.style.transform = 'translate(-50%, -50%)';
+                        explosion.style.backgroundColor = 'rgba(255, 48, 79, 0.3)';
+                        explosion.style.borderRadius = '50%';
+                        explosion.style.boxShadow = '0 0 50px 25px rgba(255, 48, 79, 0.7)';
+                        explosion.style.transition = 'all 0.5s ease-out';
+                        
+                        universe.appendChild(explosion);
+                        
+                        setTimeout(() => {
+                            explosion.style.width = '500px';
+                            explosion.style.height = '500px';
+                            explosion.style.opacity = '0';
+                            
+                            // 移除所有元素
+                            lines.forEach(line => universe.removeChild(line));
+                            universe.removeChild(playerCiv);
+                            universe.removeChild(broadcast);
+                            
+                            // 显示黑暗森林法则提示
+                            const message = document.createElement('div');
+                            message.style.position = 'absolute';
+                            message.style.top = '50%';
+                            message.style.left = '50%';
+                            message.style.transform = 'translate(-50%, -50%)';
+                            message.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                            message.style.color = '#fff';
+                            message.style.padding = '20px';
+                            message.style.borderRadius = '5px';
+                            message.style.textAlign = 'center';
+                            message.style.zIndex = '20';
+                            message.innerHTML = '<strong>黑暗森林法则</strong><br><br>宇宙文明生存法则：<br>1. 宇宙中的生存是文明的第一需要<br>2. 文明不断扩张，但宇宙中的物质总量保持不变<br>3. 猜疑链：任何文明都无法确定其他文明是否怀有善意<br><br>因此，最优策略是：发现其他文明立即消灭，隐藏自己的位置<br><br>点击"重置"按钮重新开始';
+                            
+                            const resetButton = document.createElement('button');
+                            resetButton.textContent = '重置';
+                            resetButton.style.marginTop = '20px';
+                            resetButton.style.padding = '10px 20px';
+                            resetButton.style.backgroundColor = 'var(--accent-color)';
+                            resetButton.style.border = 'none';
+                            resetButton.style.borderRadius = '5px';
+                            resetButton.style.cursor = 'pointer';
+                            
+                            message.appendChild(resetButton);
+                            universe.appendChild(message);
+                            
+                            resetButton.addEventListener('click', () => {
+                                universe.removeChild(message);
+                                universe.removeChild(explosion);
+                                createCivilizations();
+                            });
+                        }, 500);
+                    }, 1000);
+                }, 3000);
+            });
+            
+            // 初始化黑暗森林
+            createCivilizations();
+        });
+    </script>
+</body>
+</html>

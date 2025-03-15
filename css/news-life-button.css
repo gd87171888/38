@@ -1,0 +1,104 @@
+.news-life-toggle {
+    position: fixed;
+    z-index: 1001;
+    top: 150px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px; /* 缩小宽度 */
+    height: 34px; /* 缩小高度 */
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    font-size: 14px; /* 缩小字体 */
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: visible;
+    user-select: none;
+    text-decoration: none;
+    clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+}
+
+.news-life-toggle:before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #43b0f1, #ff304f, #00ff00, #43b0f1);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+    z-index: -1;
+    animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 300% 0%;
+    }
+}
+
+.news-life-toggle:hover {
+    background: rgba(67, 176, 241, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(67, 176, 241, 0.5);
+}
+
+.news-life-toggle .news-side {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ffff;
+    clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%, 0% 50%);
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px rgba(0, 255, 255, 0.5), 0 2px 2px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.news-life-toggle .life-side {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff00ff; /* 修改人生按钮颜色为粉紫色 */
+    clip-path: polygon(0% 0%, 70% 0%, 100% 50%, 70% 100%, 0% 100%);
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    text-shadow: 0 0 5px #ff00ff, 0 0 10px rgba(255, 0, 255, 0.5), 0 2px 2px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.news-life-toggle .news-side:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    transform: translateZ(5px);
+}
+
+.news-life-toggle .life-side:hover {
+    background: rgba(255, 0, 255, 0.1);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    transform: translateZ(5px);
+}
+
+.news-life-toggle.active-news .news-side {
+    background: rgba(0, 0, 0, 0.8);
+    color: #ff00ff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.news-life-toggle.active-life .life-side {
+    background: rgba(0, 0, 0, 0.8);
+    color: #ff00ff;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}

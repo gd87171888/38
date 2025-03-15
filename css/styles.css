@@ -1,0 +1,1716 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    /* 更改为纯黑色背景 */
+    background: #000000;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+/* 增强星空背景效果 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        /* 增加更多星星效果，调整大小和亮度 */
+        radial-gradient(0.8px 0.8px at 10% 10%, rgba(255, 255, 255, 0.95) 100%, transparent),
+        radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(1.2px 1.2px at 30% 30%, rgba(255, 255, 255, 0.95) 100%, transparent),
+        radial-gradient(0.7px 0.7px at 40% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(1.1px 1.1px at 50% 50%, rgba(255, 255, 255, 0.95) 100%, transparent),
+        radial-gradient(1.3px 1.3px at 60% 60%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(1.6px 1.6px at 70% 70%, rgba(255, 255, 255, 0.95) 100%, transparent),
+        radial-gradient(1.8px 1.8px at 80% 80%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(1.2px 1.2px at 90% 90%, rgba(255, 255, 255, 0.95) 100%, transparent),
+        /* 添加一些彩色星星，但降低亮度使其更符合黑色星空 */
+        radial-gradient(1.2px 1.2px at 45% 55%, rgba(135, 206, 250, 0.7) 100%, transparent),
+        radial-gradient(1.4px 1.4px at 75% 55%, rgba(255, 182, 193, 0.6) 100%, transparent),
+        radial-gradient(1.3px 1.3px at 55% 85%, rgba(255, 255, 224, 0.6) 100%, transparent),
+        radial-gradient(1.1px 1.1px at 25% 75%, rgba(176, 224, 230, 0.7) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 65% 25%, rgba(255, 160, 122, 0.6) 100%, transparent),
+        radial-gradient(1.2px 1.2px at 35% 15%, rgba(173, 216, 230, 0.7) 100%, transparent),
+        /* 添加更多密集的小星星 */
+        radial-gradient(0.5px 0.5px at 15% 35%, rgba(255, 255, 255, 0.8) 100%, transparent),
+        radial-gradient(0.6px 0.6px at 85% 15%, rgba(255, 255, 255, 0.8) 100%, transparent),
+        radial-gradient(0.4px 0.4px at 32% 67%, rgba(255, 255, 255, 0.8) 100%, transparent),
+        radial-gradient(0.7px 0.7px at 78% 42%, rgba(255, 255, 255, 0.8) 100%, transparent);
+    background-size: 
+        550px 550px, 350px 350px, 250px 250px, 150px 150px, 400px 400px, 300px 300px, 
+        500px 500px, 550px 550px, 600px 600px,
+        500px 500px, 550px 550px, 600px 600px, 450px 450px, 500px 500px, 550px 550px,
+        300px 300px, 320px 320px, 280px 280px, 340px 340px;
+    background-position: 
+        0 0, 40px 60px, 130px 270px, 70px 100px, 200px 200px, 300px 150px, 
+        250px 300px, 350px 400px, 450px 500px,
+        250px 300px, 350px 400px, 450px 500px, 150px 250px, 300px 100px, 400px 200px,
+        100px 150px, 420px 120px, 180px 350px, 380px 280px;
+    animation: twinkle 15s infinite alternate-reverse;
+    opacity: 0.9;
+    z-index: -2;
+}
+
+/* 添加星云效果，替换原来的流光效果 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* 增强星云效果，降低亮度使其更符合黑色星空 */
+        radial-gradient(circle at 30% 30%, rgba(63, 81, 181, 0.08), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(106, 27, 154, 0.08), transparent 45%),
+        radial-gradient(circle at 40% 80%, rgba(33, 150, 243, 0.08), transparent 45%),
+        radial-gradient(circle at 60% 20%, rgba(156, 39, 176, 0.06), transparent 40%),
+        /* 添加更多暗色星云 */
+        radial-gradient(circle at 20% 40%, rgba(25, 25, 112, 0.07), transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(72, 61, 139, 0.07), transparent 50%);
+    opacity: 0.7;
+    z-index: -1;
+    animation: nebula 30s infinite alternate;
+}
+
+/* 星星闪烁动画 */
+@keyframes twinkle {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* 星云动画 */
+@keyframes nebula {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 10% 20%;
+    }
+}
+
+/* 流星动画 */
+@keyframes shooting-stars {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%) translateX(-100%) scale(0);
+    }
+    20% {
+        opacity: 0.3;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(100%) translateX(100%) scale(3);
+        opacity: 0;
+    }
+}
+
+/* 添加流星效果 */
+.shooting-star {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #fff, transparent);
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    animation: shooting-stars 6s linear infinite;
+}
+
+.shooting-star:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 30%;
+    left: 80%;
+    animation-delay: 3s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 60%;
+    left: 40%;
+    animation-delay: 5s;
+}
+
+.scene {
+    perspective: 800px;
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: transparent; /* 确保背景透明 */
+    z-index: 1; /* 确保z-index不会覆盖body的背景 */
+}
+
+.holiday-text {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    text-align: center;
+    z-index: 100;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+    opacity: 0;
+    animation: fadeIn 2s forwards 1s;
+}
+
+.holiday-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+}
+
+/* 在小屏幕上隐藏上传按钮，由菜单接管 */
+@media (max-width: 768px) {
+    .upload-container {
+        display: none;
+    }
+}
+
+.upload-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.upload-btn {
+    border: none;
+    color: #00ffff;
+    background: rgba(0, 0, 0, 0.7);
+    width: 120px;
+    height: 40px;
+    clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.upload-btn::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+    z-index: -1;
+    animation: borderRotate 3s linear infinite;
+}
+
+.upload-btn:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+.upload-btn:hover::before {
+    animation: borderRotate 1.5s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% { filter: none; background-position: 0% 0%; }
+    100% { filter: none; background-position: 0% 0%; }
+}
+
+#upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.flower-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    transform: none;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ff00ff;
+    color: #ff00ff;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px #ff00ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flower-btn:hover {
+    box-shadow: 0 0 25px #ff00ff;
+    background: rgba(255, 0, 255, 0.2);
+}
+
+#preview {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 300px;
+    max-height: 300px;
+    z-index: 50;
+    display: none;
+}
+
+#preview img {
+    width: 100%;
+    height: auto;
+    border: 5px solid #ff00ff;
+    box-shadow: 0 0 20px #ff00ff;
+    border-radius: 10px;
+}
+
+.audio-control {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.audio-control button {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px #00ffff;
+    transition: all 0.3s ease;
+}
+
+.audio-control button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00ffff;
+}
+
+.audio-control input {
+    width: 80px;
+    height: 5px;
+    accent-color: #00ffff;
+    margin-left: 5px;
+}
+
+.sound-selector {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-width: 120px;
+    margin-top: 2px;
+}
+
+.sound-btn {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px #00ffff;
+    transition: all 0.3s;
+}
+
+.sound-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00ffff;
+}
+
+.sound-btn.active {
+    background: rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px #00ffff;
+}
+
+/* 将在JavaScript中创建的元素样式 */
+.jellyfish {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.jellyfish-body {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(255, 0, 255, 0.8) 0%, rgba(0, 255, 255, 0.6) 50%, rgba(255, 255, 0, 0.4) 100%);
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(0, 255, 255, 0.6);
+    opacity: 0.8;
+    animation: pulse 3s infinite alternate, jellyfishPulse 5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    from { opacity: 0.6; box-shadow: 0 0 15px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.4); }
+    to { opacity: 0.9; box-shadow: 0 0 25px rgba(255, 0, 255, 0.9), 0 0 35px rgba(0, 255, 255, 0.7); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.tentacle {
+    position: absolute;
+    bottom: -40%;
+    width: 3px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255, 0, 255, 0.8), rgba(0, 255, 255, 0.8), rgba(255, 215, 0, 0.7));
+    border-radius: 4px;
+    transform-origin: top center;
+    z-index: 1;
+    animation: tentacleWave 3s infinite ease-in-out;
+}
+
+.jellyfish-blessing {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    width: 100%;
+    text-align: center;
+    color: #FFD700; /* 纯金色 */
+    font-size: 16px; /* 稍微增大字体 */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7); /* 增强金色光晕 */
+    animation: pulse 2s infinite alternate;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.sparkle {
+    position: absolute;
+    width: 5px; /* 增加大小 */
+    height: 5px; /* 增加大小 */
+    background: #FFD700; /* 改为金色 */
+    border-radius: 50%;
+    box-shadow: 0 0 8px #FFD700, 0 0 12px rgba(255, 215, 0, 0.8); /* 金色光晕 */
+    opacity: 0;
+    animation: blink 0.8s infinite; /* 稍微放慢闪烁速度 */
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var(--moveX) * 0.25), calc(var(--moveY) * 0.25)); }
+    50% { transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)); }
+    75% { transform: translate(calc(var(--moveX) * 0.75), calc(var(--moveY) * 0.75)); }
+    100% { transform: translate(var(--moveX), var(--moveY)); }
+}
+
+@keyframes circleGlow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 255, 0.9); }
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+}
+
+
+
+.mushroom {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform;
+    z-index: 10;
+}
+
+.mushroom-cap {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background: #ff00ff;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: glow 3s infinite alternate;
+}
+
+.mushroom-stem {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 10px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff00ff, #ff66ff);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.5); }
+    to { box-shadow: 0 0 20px #ff00ff, 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+.move-spark {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: moveSparkAnimation 0.5s ease-out forwards;
+}
+
+@keyframes moveSparkAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--moveX), var(--moveY)) scale(0);
+        opacity: 0;
+    }
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00ff, transparent);
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    animation: floatUp 3s linear forwards, fade 3s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-500px); }
+}
+
+@keyframes fade {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    25% { transform: translateY(calc(var(--moveY) * 0.3)) translateX(calc(var(--moveX) * 0.3)); opacity: 0.9; }
+    50% { transform: translateY(calc(var(--moveY) * 0.5)) translateX(calc(var(--moveX) * 0.5)); opacity: 1; }
+    75% { transform: translateY(calc(var(--moveY) * 0.8)) translateX(calc(var(--moveX) * 0.8)); opacity: 0.9; }
+    100% { transform: translateY(var(--moveY)) translateX(var(--moveX)); opacity: 0.7; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes tentacleWave {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes jellyfishPulse {
+    0% { transform: scaleX(1) scaleY(1); }
+    50% { transform: scaleX(1.05) scaleY(0.95); }
+    100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 图片小圆圈样式 */
+.image-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    z-index: 20;
+    animation: circleFloat 30s linear forwards, circleGlow 3s infinite alternate;
+}
+
+@keyframes circleFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(calc(var

@@ -1,0 +1,163 @@
+.menu-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ff00ff;
+    border-radius: 30px;
+    color: #ff00ff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    user-select: none;
+    margin-bottom: 5px;
+}
+
+.menu-toggle:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.menu-toggle:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+    z-index: -1;
+    /* animation: glowRotate 6s infinite linear; */ /* 移除旋转动画 */
+    opacity: 0.3;
+    pointer-events: none; /* 添加这一行，确保伪元素不会拦截点击事件 */
+}
+
+.menu-toggle .icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    opacity: 0;
+    width: 150px;
+}
+
+.menu-items.active {
+    max-height: 300px;
+    opacity: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.menu-item {
+    padding: 10px 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item .icon {
+    margin-right: 8px;
+}
+
+.menu-item.ai-news {
+    color: #00ffff;
+}
+
+.menu-item.social-feed {
+    color: #00ffff;
+}
+
+.menu-item.thought-feed {
+    color: #00ff00;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {    
+    /* 移除了隐藏按钮的样式，让按钮在移动端也可见 */
+    .menu-container {
+        display: flex;
+    }
+    
+    /* 调整移动端按钮位置，避免重叠和遮挡 */
+    .social-feed-toggle {
+        top: 50px;
+        transform: none;
+        left: 10px;
+        right: auto;
+    }
+    
+    .thought-feed-toggle {
+        top: 120px !important; /* 调整为音乐控制区域下方 */
+        transform: none;
+        left: 10px !important;
+        right: auto !important;
+    }
+    
+    .ai-news-toggle {
+        top: 150px !important; /* 调整为三体宇宙按钮下方，避免遮挡 */
+        right: 10px !important;
+        left: auto !important;
+        width: 140px !important;
+    }
+}
+
+/* 移除了这个媒体查询，让菜单在所有设备上都可见 */
+/* @media (min-width: 769px) {
+    .menu-container {
+        display: none;
+    }
+} */
+
+/* 为大屏幕设备优化菜单位置和样式 */
+@media (min-width: 769px) {
+    .menu-container {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .menu-toggle {
+        padding: 10px 20px;
+        font-size: 18px;
+    }
+    
+    .menu-items {
+        width: 180px;
+    }
+    
+    .menu-item {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+}

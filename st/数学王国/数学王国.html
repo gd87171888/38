@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学王国探险</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    
+    <style>
+        .math-card {
+            transition: all 0.3s ease;
+        }
+        
+        .math-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .canvas-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <header class="bg-indigo-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">数学王国探险</h1>
+            <p class="mt-2">抽象概念的可视化之旅</p>
+        </div>
+    </header>
+
+    <nav class="bg-indigo-800 text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-1 overflow-x-auto py-2">
+                <a href="#" class="nav-link px-4 py-2 rounded-md bg-indigo-700" data-section="abstract-algebra">抽象代数</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-indigo-600" data-section="number-theory">数论</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-indigo-600" data-section="topology">拓扑学</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-indigo-600" data-section="differential-geometry">微分几何</a>
+                <a href="#" class="nav-link px-4 py-2 rounded-md hover:bg-indigo-600" data-section="functional-analysis">泛函分析</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 抽象代数部分 -->
+        <section id="abstract-algebra" class="math-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12">
+            <h2 class="text-2xl font-bold mb-4">抽象代数：群论探索</h2>
+            <p class="mb-6">抽象代数研究代数结构，如群、环和域。这里我们将探索群的性质和可视化。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">群可视化</h3>
+                    <p class="mb-4">探索不同类型的群及其元素之间的关系：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">群类型：</label>
+                        <select id="group-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="cyclic">循环群 (Cn)</option>
+                            <option value="dihedral">二面体群 (Dn)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">群大小：</label>
+                        <select id="group-size" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    
+                    <button id="update-group" class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        更新群结构
+                    </button>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="group-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-3">凯莱表 (Cayley Table)</h3>
+                <p class="mb-4">凯莱表展示了群中所有元素之间的运算结果：</p>
+                
+                <div class="overflow-x-auto">
+                    <div id="cayley-table" class="inline-block min-w-full align-middle"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-indigo-700 dark:text-indigo-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>群</strong>：一个集合配备一个二元运算，满足结合律、单位元和逆元的存在性。</li>
+                    <li><strong>循环群</strong>：由单个元素生成的群，所有元素都是这个生成元的幂。</li>
+                    <li><strong>二面体群</strong>：正多边形的对称群，包含旋转和反射。</li>
+                    <li><strong>同态</strong>：保持运算结构的映射，是理解不同代数结构之间关系的关键。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 数论部分 -->
+        <section id="number-theory" class="math-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">数论：数的奥秘</h2>
+            <p class="mb-6">数论研究整数的性质和关系，是现代密码学的基础。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">素数可视化</h3>
+                    <p class="mb-4">探索素数的分布和模式：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            范围：1 - <span id="prime-range-value">100</span>
+                        </label>
+                        <input type="range" id="prime-range" min="10" max="500" value="100" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">显示模式：</label>
+                        <select id="prime-display-mode" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                            <option value="distribution">素数分布</option>
+                            <option value="pi-function">素数计数函数 π(x)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">素数测试：</label>
+                        <div class="flex">
+                            <input type="number" id="prime-test-input" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-red-500 focus:border-red-500" placeholder="输入一个数">
+                            <button id="test-prime" class="px-4 py-2 bg-red-600 text-white rounded-r-md hover:bg-red-700">
+                                测试
+                            </button>
+                        </div>
+                        <div id="prime-test-result" class="mt-2 text-sm"></div>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="prime-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-red-50 dark:bg-red-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-red-700 dark:text-red-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>素数</strong>：只能被1和自身整除的大于1的整数。</li>
+                    <li><strong>素数定理</strong>：描述素数在自然数中的分布，π(x) ~ x/ln(x)。</li>
+                    <li><strong>模运算</strong>：考虑除法的余数，是密码学的基础。</li>
+                    <li><strong>欧拉函数</strong>：φ(n)表示小于n且与n互质的正整数个数。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 拓扑学部分 -->
+        <section id="topology" class="math-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">拓扑学：形状的本质</h2>
+            <p class="mb-6">拓扑学研究在连续变形下保持不变的几何性质，关注空间的"连通性"而非具体度量。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">拓扑空间可视化</h3>
+                    <p class="mb-4">探索不同拓扑空间的性质和不变量：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">选择形状：</label>
+                        <select id="shape-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="sphere">球面</option>
+                            <option value="torus">环面</option>
+                            <option value="double-torus">双环面</option>
+                            <option value="mobius">莫比乌斯带</option>
+                            <option value="klein-bottle">克莱因瓶</option>
+                        </select>
+                    </div>
+                    
+                    <div id="topology-invariants" class="mt-4">
+                        <!-- 拓扑不变量将在这里显示 -->
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="topology-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>同胚</strong>：两个拓扑空间之间的双连续映射，是拓扑学中的等价关系。</li>
+                    <li><strong>亏格</strong>：直观上表示物体上的"洞"的数量，是重要的拓扑不变量。</li>
+                    <li><strong>欧拉示性数</strong>：χ = V - E + F，其中V、E、F分别是顶点、边和面的数量。</li>
+                    <li><strong>同伦</strong>：研究可以连续变形为彼此的映射，是代数拓扑的基础。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 微分几何部分 -->
+        <section id="differential-geometry" class="math-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">微分几何：曲面的数学</h2>
+            <p class="mb-6">微分几何研究曲线和曲面的性质，是广义相对论的数学基础。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">曲面可视化</h3>
+                    <p class="mb-4">探索不同曲面的几何性质：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">选择曲面：</label>
+                        <select id="surface-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                            <option value="sphere">球面</option>
+                            <option value="torus">环面</option>
+                            <option value="klein-bottle">克莱因瓶</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="curvature-display" class="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            显示曲率分布
+                        </label>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-green-50 dark:bg-green-900/30 rounded-lg text-sm">
+                        <p><strong>高斯曲率</strong>是曲面在一点处的内蕴性质，不依赖于曲面如何嵌入到三维空间中。</p>
+                        <p class="mt-2"><strong>平均曲率</strong>则与曲面在三维空间中的具体嵌入有关。</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="surface-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-green-50 dark:bg-green-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-green-700 dark:text-green-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>高斯曲率</strong>：曲面在一点的两个主曲率的乘积，是曲面的内蕴性质。</li>
+                    <li><strong>测地线</strong>：曲面上两点间的最短路径，是直线在曲面上的推广。</li>
+                    <li><strong>第一基本形式</strong>：描述曲面上的度量，用于测量曲面上的长度和角度。</li>
+                    <li><strong>第二基本形式</strong>：描述曲面如何弯曲嵌入到周围空间中。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- 泛函分析部分 -->
+        <section id="functional-analysis" class="math-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12 hidden">
+            <h2 class="text-2xl font-bold mb-4">泛函分析：无限维空间</h2>
+            <p class="mb-6">泛函分析将线性代数的概念扩展到无限维空间，是量子力学的数学基础。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">函数空间可视化</h3>
+                    <p class="mb-4">探索函数和算子的性质：</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">函数族：</label>
+                        <select id="function-family" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+                            <option value="polynomial">多项式</option>
+                            <option value="trigonometric">三角函数</option>
+                            <option value="exponential">指数函数</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            参数值：<span id="func-param-value">1</span>
+                        </label>
+                        <input type="range" id="func-param" min="0.1" max="5" value="1" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">算子：</label>
+                        <select id="operator-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+                            <option value="identity">恒等算子</option>
+                            <option value="derivative">微分算子</option>
+                            <option value="integral">积分算子</option>
+                        </select>
+                    </div>
+                    
+                    <button id="apply-operator" class="mt-2 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                        应用算子
+                    </button>
+                    
+                    <div id="function-equation" class="mt-4 text-center text-lg formula-display">
+                        f(x) = x²
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <div id="function-visualization" class="w-full h-full"></div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-purple-700 dark:text-purple-300">关键概念解释</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li><strong>希尔伯特空间</strong>：具有内积的完备向量空间，是量子力学的数学框架。</li>
+                    <li><strong>算子</strong>：函数空间之间的映射，如微分算子和积分算子。</li>
+                    <li><strong>谱定理</strong>：描述自伴算子的特征值和特征向量的性质。</li>
+                    <li><strong>巴拿赫空间</strong>：完备的赋范向量空间，是泛函分析的基本研究对象。</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>数学王国探险 - 抽象概念的可视化之旅</p>
+            <p class="text-sm text-gray-400 mt-2">通过互动可视化理解复杂数学概念</p>
+        </div>
+    </footer>
+
+    <!-- 引入自定义脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

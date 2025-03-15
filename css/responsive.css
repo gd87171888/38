@@ -1,0 +1,143 @@
+/* 响应式设计 - 确保在不同设备上的良好显示效果 */
+
+/* 默认样式（桌面端） */
+.social-feed-toggle {
+    /* 保持原有样式 */
+}
+
+.news-life-toggle {
+    /* 保持原有样式 */
+    top: 100px !important; /* 与三体宇宙按钮对齐 */
+    right: 20px !important; /* 保持在右侧 */
+    left: auto !important; /* 确保不使用左侧定位 */
+    width: 120px !important; /* 确保按钮宽度一致，与主样式保持一致 */
+}
+
+.thought-feed-toggle {
+    /* 保持原有样式 */
+    top: 200px !important; /* 将人生感悟按钮移到AI新闻按钮下方 */
+    right: 20px !important; /* 保持在右侧与三体宇宙按钮对齐 */
+    left: auto !important; /* 不使用左侧定位 */
+    transform: none !important; /* 移除水平居中 */
+    width: 160px !important; /* 确保按钮宽度足够 */
+}
+
+/* 平板设备 (768px 及以下) */
+@media screen and (max-width: 768px) {
+    .social-feed-container {
+        width: 280px;
+        max-height: 70vh;
+        right: 10px;
+    }
+    
+    .ai-news-container {
+        width: 280px;
+        max-height: 70vh;
+        left: 10px !important;
+    }
+    
+    .social-feed-toggle {
+        top: 80px;
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .ai-news-toggle {
+        top: 70px !important; /* 调整为三体宇宙按钮下方 */
+        right: 10px !important;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 15px;
+        width: auto;
+        height: auto;
+    }
+    
+    .thought-feed-toggle {
+        top: 120px !important; /* 调整位置 */
+        right: 10px !important;
+        left: auto !important;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 15px;
+        width: auto;
+        height: auto;
+    }
+}
+
+/* 手机设备 (480px 及以下) */
+@media screen and (max-width: 480px) {
+    .social-feed-container {
+        width: 250px;
+        max-height: 60vh;
+        right: 5px;
+        padding: 15px;
+    }
+    
+    .ai-news-container {
+        width: 250px;
+        max-height: 60vh;
+        left: 5px !important;
+        padding: 15px;
+        top: 60px !important; /* 避免遮挡顶部元素 */
+    }
+    
+    .social-feed-toggle {
+        top: 120px;
+        left: auto;
+        right: 10px;
+        transform: none;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .social-feed-toggle:hover {
+        transform: scale(1.02);
+    }
+    
+    .ai-news-toggle {
+        top: 70px !important; /* 调整为三体宇宙按钮下方 */
+        right: 10px !important;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .thought-feed-toggle {
+        top: 120px !important; /* 调整位置 */
+        right: 10px !important;
+        left: auto !important;
+        transform: none !important;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .tweet {
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 0.85em;
+    }
+    
+    .social-feed-title {
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+}
+
+/* 小型手机设备 (320px 及以下) */
+@media screen and (max-width: 320px) {
+    .social-feed-container,
+    .ai-news-container {
+        width: 220px;
+    }
+    
+    .social-feed-toggle {
+        top: 150px;
+    }
+    
+    .ai-news-toggle {
+        top: 70px !important; /* 保持在三体宇宙按钮下方 */
+    }
+    
+    .thought-feed-toggle {
+        top: 120px !important; /* 调整位置 */
+    }
+}

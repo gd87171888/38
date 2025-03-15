@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字空间奇妙：当1不再等于1</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .quantum-bit {
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .quantum-bit-front, .quantum-bit-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .quantum-bit-back {
+            transform: rotateY(180deg);
+        }
+        
+        .quantum-container:hover .quantum-bit {
+            transform: rotateY(180deg);
+        }
+        
+        .superposition {
+            background: linear-gradient(45deg, #3b82f6 0%, #ec4899 100%);
+        }
+        
+        .code-window {
+            font-family: 'Courier New', monospace;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background-color: #2d3748;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .code-dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .code-body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .highlight-blue {
+            color: #63b3ed;
+        }
+        
+        .highlight-green {
+            color: #68d391;
+        }
+        
+        .highlight-purple {
+            color: #d6bcfa;
+        }
+        
+        .highlight-red {
+            color: #fc8181;
+        }
+        
+        .highlight-yellow {
+            color: #faf089;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-center">数字空间奇妙</h1>
+            <p class="text-xl md:text-2xl text-center">当1不再等于1的神奇世界</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 介绍部分 -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">什么是数字空间？</h2>
+                <p class="mb-4">数字空间并不是我们生活的物理世界，而是一个虚拟的领域，由计算机的二进制逻辑和数学规则构建而成。在这里，所有的信息都被转化为0和1的组合，通过程序和算法运行，创造出无数的可能性。</p>
+                <p>然而，这个空间并非总是遵循我们熟悉的规则，它有时会展现出令人困惑的一面。让我们一起探索那些可能在某些时段颠覆我们认知的数字秘密。</p>
+                
+                <div class="mt-6 flex justify-center">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg float-animation" style="animation-delay: 0s;">
+                            <span class="text-3xl font-bold">0</span>
+                        </div>
+                        <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg float-animation" style="animation-delay: 0.5s;">
+                            <span class="text-3xl font-bold">1</span>
+                        </div>
+                        <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg float-animation" style="animation-delay: 1s;">
+                            <span class="text-3xl font-bold">0</span>
+                        </div>
+                        <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg float-animation" style="animation-delay: 1.5s;">
+                            <span class="text-3xl font-bold">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 浮点数误差互动 -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">浮点数的误差</h2>
+                <p class="mb-6">在计算机中，数字通常以二进制形式存储，尤其是小数（浮点数）。由于二进制无法精确表示某些十进制小数，就会产生微小的误差。</p>
+                
+                <div class="code-window mb-6">
+                    <div class="code-header">
+                        <div>
+                            <span class="code-dot bg-red-500"></span>
+                            <span class="code-dot bg-yellow-500"></span>
+                            <span class="code-dot bg-green-500"></span>
+                        </div>
+                        <div class="text-sm">浮点数计算</div>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="highlight-blue">let</span> a = <span class="highlight-green">0.1</span>;
+<span class="highlight-blue">let</span> b = <span class="highlight-green">0.2</span>;
+<span class="highlight-blue">let</span> result = a + b;
+
+<span class="highlight-purple">console</span>.<span class="highlight-yellow">log</span>(result); <span class="highlight-red">// 输出: 0.30000000000000004</span></pre>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">亲自体验浮点数误差</h3>
+                    <div class="flex flex-col md:flex-row md:items-center gap-4">
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">第一个数</label>
+                            <input type="number" id="float-num1" value="0.1" step="0.1" class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600">
+                        </div>
+                        <div class="flex-none text-center text-2xl">+</div>
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">第二个数</label>
+                            <input type="number" id="float-num2" value="0.2" step="0.1" class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600">
+                        </div>
+                        <div class="flex-none">
+                            <button id="calculate-float" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">计算</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <div class="mb-2">
+                            <span class="font-medium">预期结果:</span>
+                            <span id="expected-result" class="ml-2">0.3</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="font-medium">实际结果:</span>
+                            <span id="actual-result" class="ml-2 font-mono">0.30000000000000004</span>
+                        </div>
+                        <div id="result-equal" class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded mt-2">
+                            <span class="font-medium">结论:</span>
+                            <span class="ml-2">在数字空间中，0.1 + 0.2 不精确等于 0.3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NaN互动 -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">NaN：不等于自身的数字</h2>
+                <p class="mb-6">NaN（Not a Number，不是一个数）通常出现在计算错误时，例如 0 ÷ 0 或其他未定义的操作。它的奇妙之处在于，NaN与任何数字比较，甚至与它自己比较，结果都是"false"。</p>
+                
+                <div class="code-window mb-6">
+                    <div class="code-header">
+                        <div>
+                            <span class="code-dot bg-red-500"></span>
+                            <span class="code-dot bg-yellow-500"></span>
+                            <span class="code-dot bg-green-500"></span>
+                        </div>
+                        <div class="text-sm">NaN的特性</div>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="highlight-blue">let</span> nan = <span class="highlight-green">0</span> / <span class="highlight-green">0</span>; <span class="highlight-red">// NaN</span>
+
+<span class="highlight-purple">console</span>.<span class="highlight-yellow">log</span>(nan === nan); <span class="highlight-red">// 输出: false</span>
+<span class="highlight-purple">console</span>.<span class="highlight-yellow">log</span>(nan == nan);  <span class="highlight-red">// 输出: false</span>
+
+<span class="highlight-red">// NaN是JavaScript中唯一不等于自身的值</span></pre>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">探索NaN的奇妙特性</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-medium mb-2">创建NaN的方式</h4>
+                            <select id="nan-creator" class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600">
+                                <option value="0/0">0 ÷ 0</option>
+                                <option value="Math.sqrt(-1)">负数的平方根</option>
+                                <option value="parseInt('hello')">尝试将文本转换为数字</option>
+                                <option value="undefined + 1">undefined加数字</option>
+                            </select>
+                            <button id="create-nan" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">生成NaN</button>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-medium mb-2">NaN的比较测试</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <span class="mr-2">NaN == NaN:</span>
+                                    <span id="nan-equal-result" class="font-mono bg-red-100 dark:bg-red-900 px-2 py-1 rounded">false</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="mr-2">NaN === NaN:</span>
+                                    <span id="nan-strict-equal-result" class="font-mono bg-red-100 dark:bg-red-900 px-2 py-1 rounded">false</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="mr-2">isNaN(NaN):</span>
+                                    <span id="is-nan-result" class="font-mono bg-green-100 dark:bg-green-900 px-2 py-1 rounded">true</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-3 bg-purple-100 dark:bg-purple-900 rounded">
+                        <p class="font-medium">结论: 在数字空间中，NaN是唯一一个不等于自身的值。这打破了我们对"相等"这一基本概念的理解。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 量子比特互动 -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">量子计算的叠加态</h2>
+                <p class="mb-6">在量子计算领域，量子比特（qubit）不同于经典计算机的0或1，它可以同时处于0和1的叠加态。在某些时段，一个量子比特的值既不是单纯的1，也不是单纯的0，而是两者的混合。</p>
+                
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-1">
+                        <div class="code-window">
+                            <div class="code-header">
+                                <div>
+                                    <span class="code-dot bg-red-500"></span>
+                                    <span class="code-dot bg-yellow-500"></span>
+                                    <span class="code-dot bg-green-500"></span>
+                                </div>
+                                <div class="text-sm">量子比特的概念</div>
+                            </div>
+                            <div class="code-body">
+                                <pre><span class="highlight-red">// 经典比特只能是0或1</span>
+<span class="highlight-blue">let</span> classicBit = <span class="highlight-green">0</span>; <span class="highlight-red">// 或 1</span>
+
+<span class="highlight-red">// 量子比特可以是0和1的叠加态</span>
+<span class="highlight-blue">let</span> qubit = <span class="highlight-green">0.7</span> * |<span class="highlight-green">0</span>⟩ + <span class="highlight-green">0.7</span> * |<span class="highlight-green">1</span>⟩;
+
+<span class="highlight-red">// 测量前，qubit同时是0和1</span>
+<span class="highlight-red">// 测量后，坍缩为0或1之一</span></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <div class="flex justify-center">
+                            <div class="quantum-container relative w-40 h-40 cursor-pointer">
+                                <div class="quantum-bit w-full h-full relative transform transition-transform duration-500">
+                                    <div class="quantum-bit-front absolute bg-blue-500 text-white text-4xl font-bold flex items-center justify-center rounded-full w-full h-full">0</div>
+                                    <div class="quantum-bit-back absolute bg-pink-500 text-white text-4xl font-bold flex items-center justify-center rounded-full w-full h-full">1</div>
+                                </div>
+                                <p class="text-center mt-4">将鼠标悬停在量子比特上<br>体验叠加态</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-gray-100 dark:bg-gray-700 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">模拟量子比特的叠加态</h3>
+                    
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">|0⟩的概率振幅</label>
+                            <input type="range" id="zero-amplitude" min="0" max="100" value="50" class="w-full">
+                            <div class="flex justify-between text-sm">
+                                <span>0%</span>
+                                <span id="zero-probability">50%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">|1⟩的概率振幅</label>
+                            <input type="range" id="one-amplitude" min="0" max="100" value="50" class="w-full">
+                            <div class="flex justify-between text-sm">
+                                <span>0%</span>
+                                <span id="one-probability">50%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-center">
+                        <div id="quantum-visualization" class="w-32 h-32 rounded-full superposition flex items-center justify-center text-white font-bold text-xl">
+                            叠加态
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button id="measure-qubit" class="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded w-full">测量量子比特</button>
+                        <div class="mt-4 p-3 bg-indigo-100 dark:bg-indigo-900 rounded text-center">
+                            <p>测量结果: <span id="measurement-result" class="font-bold">尚未测量</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结论部分 -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">数字空间奇妙的意义</h2>
+                <p class="mb-4">这些"1不等于1"的现象不仅仅是技术上的小插曲，它们对我们的生活和科技发展有着深远的影响：</p>
+                
+                <ul class="list-disc pl-6 mb-6 space-y-2">
+                    <li>在金融计算中，浮点误差可能导致账目不准，需要特别的算法来纠正。</li>
+                    <li>NaN提醒程序员在设计软件时考虑异常情况，确保系统稳定。</li>
+                    <li>量子计算中的叠加态则预示着未来计算能力的革命性飞跃。</li>
+                </ul>
+                
+                <p>数字空间的奇妙之处，既是挑战，也是探索的动力。它让我们重新审视那些习以为常的规则，激发我们对未知的好奇。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 数字空间探索者. 版权所有</p>
+            <p class="mt-2 text-gray-400">在数字的宇宙中，还有多少未知的奇迹等待我们发现？</p>
+        </div>
+    </footer>
+
+    <script>
+        // 浮点数计算互动
+        document.getElementById('calculate-float').addEventListener('click', function() {
+            const num1 = parseFloat(document.getElementById('float-num1').value);
+            const num2 = parseFloat(document.getElementById('float-num2').value);
+            
+            const expected = num1 + num2;
+            const actual = (num1 * 1000 + num2 * 1000) / 1000; // 模拟精确计算
+            const jsResult = num1 + num2;
+            
+            document.getElementById('expected-result').textContent = expected.toString();
+            document.getElementById('actual-result').textContent = jsResult.toString();
+            
+            if (jsResult === expected) {
+                document.getElementById('result-equal').className = 'p-3 bg-green-100 dark:bg-green-900 rounded mt-2';
+                document.getElementById('result-equal').innerHTML = '<span class="font-medium">结论:</span><span class="ml-2">在这个例子中，计算结果是精确的</span>';
+            } else {
+                document.getElementById('result-equal').className = 'p-3 bg-yellow-100 dark:bg-yellow-900 rounded mt-2';
+                document.getElementById('result-equal').innerHTML = '<span class="font-medium">结论:</span><span class="ml-2">在数字空间中，' + num1 + ' + ' + num2 + ' 不精确等于 ' + expected + '</span>';
+            }
+        });
+        
+        // NaN互动
+        document.getElementById('create-nan').addEventListener('click', function() {
+            const method = document.getElementById('nan-creator').value;
+            let nan;
+            
+            switch(method) {
+                case '0/0':
+                    nan = 0/0;
+                    break;
+                case 'Math.sqrt(-1)':
+                    nan = Math.sqrt(-1);
+                    break;
+                case 'parseInt(\'hello\')':
+                    nan = parseInt('hello');
+                    break;
+                case 'undefined + 1':
+                    nan = undefined + 1;
+                    break;
+            }
+            
+            document.getElementById('nan-equal-result').textContent = (nan == nan).toString();
+            document.getElementById('nan-strict-equal-result').textContent = (nan === nan).toString();
+            document.getElementById('is-nan-result').textContent = isNaN(nan).toString();
+        });
+        
+        // 量子比特互动
+        const zeroAmplitude = document.getElementById('zero-amplitude');
+        const oneAmplitude = document.getElementById('one-amplitude');
+        const zeroProbability = document.getElementById('zero-probability');
+        const oneProbability = document.getElementById('one-probability');
+        const quantumVisualization = document.getElementById('quantum-visualization');
+        
+        function updateQuantumState() {
+            const zeroProb = parseInt(zeroAmplitude.value);
+            const oneProb = parseInt(oneAmplitude.value);
+            
+            zeroProbability.textContent = zeroProb + '%';
+            oneProbability.textContent = oneProb + '%';
+            
+            // 更新可视化
+            const bluePercentage = zeroProb;
+            const pinkPercentage = oneProb;
+            
+            quantumVisualization.style.background = `linear-gradient(45deg, #3b82f6 ${bluePercentage}%, #ec4899 ${bluePercentage}%)`;
+            
+            if (zeroProb > 90) {
+                quantumVisualization.textContent = '接近|0⟩';
+            } else if (oneProb > 90) {
+                quantumVisualization.textContent = '接近|1⟩';
+            } else {
+                quantumVisualization.textContent = '叠加态';
+            }
+        }
+        
+        zeroAmplitude.addEventListener('input', function() {
+            oneAmplitude.value = 100 - this.value;
+            updateQuantumState();
+        });
+        
+        oneAmplitude.addEventListener('input', function() {
+            zeroAmplitude.value = 100 - this.value;
+            updateQuantumState();
+        });
+        
+        document.getElementById('measure-qubit').addEventListener('click', function() {
+            const zeroProb = parseInt(zeroAmplitude.value);
+            const random = Math.random() * 100;
+            
+            let result;
+            if (random < zeroProb) {
+                result = '|0⟩';
+                quantumVisualization.style.background = '#3b82f6';
+                quantumVisualization.textContent = '0';
+            } else {
+                result = '|1⟩';
+                quantumVisualization.style.background = '#ec4899';
+                quantumVisualization.textContent = '1';
+            }
+            
+            document.getElementById('measurement-result').textContent = result;
+            
+            // 3秒后重置为叠加态
+            setTimeout(() => {
+                updateQuantumState();
+            }, 3000);
+        });
+        
+        // 初始化
+        updateQuantumState();
+    </script>
+</body>
+</html>
