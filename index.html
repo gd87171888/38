@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/crystal-stone.css">
+    <link rel="stylesheet" href="css/logo.css">
+    <link rel="stylesheet" href="css/social-feed.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/art-text.css">
+    <link rel="stylesheet" href="css/exam-cheer.css">
+    <link rel="stylesheet" href="css/menu-buttons.css">
+    <link rel="stylesheet" href="css/news-life-button.css">
+    <link rel="stylesheet" href="css/news-container.css">
+    <link rel="stylesheet" href="css/thought-feed.css">
+    <link rel="stylesheet" href="css/nav-bar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Caveat&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <script src="js/rose.js"></script>
+    <script src="js/birthday-roses.js"></script>
+    <script src="js/nine-roses.js"></script>
+    <script src="js/dice.js"></script>
+</head>
+<body>
+    <div class="scene" id="scene">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <div class="tech-horn-left"></div>
+                    <div class="tech-horn-right"></div>
+                    <div class="circuit-node-1"></div>
+                    <div class="circuit-node-2"></div>
+                    <div class="circuit-node-3"></div>
+                    <div class="circuit-node-4"></div>
+                </div>
+                <div class="logo-text">快卖AI</div>
+            </div>
+        </div>
+        <!-- 已删除节日文字 -->
+        
+        <div id="preview">
+            <img id="previewImg" src="" alt="预览图片">
+        </div>
+        
+        <div class="controls">
+            <!-- 恢复上传图片按钮 -->
+            <div class="upload-container">
+                <button class="upload-btn" id="uploadBtn">上传图片</button>
+            </div>
+            <button class="flower-btn" id="flowerBtn">送花</button>
+            <!-- 添加人生感悟按钮 -->
+            <button class="life-insight-btn" id="lifeInsightBtn"></button>
+        </div>
+        
+        <div class="audio-control">
+            <button id="toggleAudio">▶</button>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5">
+            <div class="sound-selector" id="soundSelector"></div>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop>
+        <!-- 移除了外部音频源，将通过JavaScript设置本地音频源 -->
+    </audio>
+    
+    <script src="js/birthday-cake.js"></script>
+    <script src="js/portrait.js"></script>
+    <script src="js/nature-sounds.js"></script>
+    <script src="js/art-text.js"></script>
+    <script src="js/exam-cheer.js"></script>
+    <script src="js/menu-buttons.js"></script>
+    <script src="js/news-life.js"></script>
+    <script src="js/life-insight-button.js"></script>
+    <script src="js/nav-bar.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
