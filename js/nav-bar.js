@@ -6,7 +6,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // 创建导航栏切换按钮
     const navBarToggle = document.createElement('div');
     navBarToggle.className = 'nav-bar-toggle';
-    navBarToggle.innerHTML = '<span class="icon">🔗</span> 菜';
+    
+    // 创建科技感太极SVG图标
+    const taijiSvg = `
+        <svg class="taiji-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- 外部电流环 -->
+            <circle class="electric-circle" cx="50" cy="50" r="48" fill="none" stroke="#00ffff" stroke-width="2" />
+            
+            <!-- 电流效果 -->
+            <circle class="electric-particle particle1" cx="50" cy="2" r="2" fill="#00ffff" />
+            <circle class="electric-particle particle2" cx="85" cy="25" r="2" fill="#00ffff" />
+            <circle class="electric-particle particle3" cx="85" cy="75" r="2" fill="#00ffff" />
+            <circle class="electric-particle particle4" cx="50" cy="98" r="2" fill="#00ffff" />
+            <circle class="electric-particle particle5" cx="15" cy="75" r="2" fill="#00ffff" />
+            <circle class="electric-particle particle6" cx="15" cy="25" r="2" fill="#00ffff" />
+            
+            <!-- 闪电效果 -->
+            <path class="lightning lightning1" d="M50,2 L55,10 L45,15 L55,25" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            <path class="lightning lightning2" d="M85,25 L75,30 L80,40 L70,45" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            <path class="lightning lightning3" d="M85,75 L75,70 L80,60 L70,55" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            <path class="lightning lightning4" d="M50,98 L45,90 L55,85 L45,75" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            <path class="lightning lightning5" d="M15,75 L25,70 L20,60 L30,55" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            <path class="lightning lightning6" d="M15,25 L25,30 L20,40 L30,45" stroke="#00ffff" stroke-width="1.5" fill="none" />
+            
+            <!-- 太极基础 -->
+            <circle cx="50" cy="50" r="40" fill="black" stroke="#00ffff" stroke-width="1" />
+            <path d="M50,10 A40,40 0 0 1 50,90 A40,40 0 0 0 50,10" fill="white" />
+            
+            <!-- 太极眼 -->
+            <circle cx="50" cy="30" r="8" fill="white" stroke="#00ffff" stroke-width="0.5" />
+            <circle cx="50" cy="30" r="4" fill="black" />
+            <circle cx="50" cy="70" r="8" fill="black" stroke="#00ffff" stroke-width="0.5" />
+            <circle cx="50" cy="70" r="4" fill="white" />
+        </svg>
+    `;
+    
+    navBarToggle.innerHTML = taijiSvg;
     
     // 创建导航菜单项容器
     const navBarItems = document.createElement('div');
